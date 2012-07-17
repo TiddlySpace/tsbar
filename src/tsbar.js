@@ -77,6 +77,10 @@
 	 */
 	tsbar.define = function(position, widget) {
 		_widgets[position].push(widget);
+
+		if ($bar) {
+			_addWidget(widget, _fetchContainer(position));
+		}
 	};
 
 	/*

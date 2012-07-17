@@ -75,3 +75,15 @@ test('clicking on a widget toggles the "open" class', function() {
 	strictEqual(toolbar.find('.open').length, 0,
 		'clicking again closes the widget');
 });
+
+test('you can add widgets after creating the toolbar', function() {
+	var toolbar = tsbar.render();
+
+	tsbar.define('right', tsbar.Widget({
+		el: '<span>Hello World.</span>',
+		popup: 'This is a popup.'
+	}));
+
+	strictEqual(toolbar.find('.tsbar-right').find('.tsbar-widget').length, 1,
+		'there is now a widget in the right hand pane');
+});
