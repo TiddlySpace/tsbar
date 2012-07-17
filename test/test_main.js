@@ -3,7 +3,7 @@ module('main bar', {
 		tsbar.clear();
 	},
 	teardown: function() {
-		$('#sandbox').html();
+		$('#sandbox').html('');
 	}
 });
 
