@@ -6,7 +6,7 @@
  * Requires jQuery
  *
  */
-(function(exports) {
+(function(exports, $) {
 
 	// create the main namespace for tsbar
 	var tsbar = {};
@@ -119,4 +119,4 @@
 	// export the bar to the global object
 	exports.tsbar = tsbar;
 
-}(window));
+}(window, jQuery));
