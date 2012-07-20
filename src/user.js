@@ -140,8 +140,11 @@
 		});
 
 		activity.getRecent(function(tiddlers) {
-			tiddlers.sort(function(a, b) { return b.modified - a.modified; });
+			tiddlers.sort(function(a, b) {
+				return _getDate(a.modified) - _getDate(b.modified);
+			});
 			activity.renderAll(tiddlers.slice(0, Activity.MAX_NOTIFICATIONS));
+			activity.listen();
 		});
 	}
 
@@ -165,6 +168,9 @@
 
 		// get the time of the most recent notification the user saw
 		this.getLastChecked(function() {});
+
+		// initialise the new notification variable
+		this._newNotifications = 0;
 	}
 
 	$.extend(Activity.prototype, {
@@ -221,6 +227,7 @@
 
 			this.getLastChecked(function(lastChecked) {
 				if (_getDate(tiddler.modified) > lastChecked) {
+					self.addNotificationCount();
 					$li.addClass('tsbar-notification-new');
 				}
 				self.$listEl.prepend($li);
@@ -250,6 +257,43 @@
 			});
 		},
 		listen: function() {
+			var self = this;
+			if ('io' in window) {
+				var socket = io.connect('http://tiddlyspace.com:8081');
+				socket.on('connect', function() {
+					socket.emit('subscribe', 'tags/@' + self.username);
+					socket.emit('subscribe', 'tags/follow');
+				});
+				socket.on('tiddler', function(data) {
+					self._getTiddler(data, function(tiddler) {
+						self.render(tiddler);
+					});
+				});
+			}
+		},
+		addNotificationCount: function() {
+			this._newNotifications++;
+			this.$countEl.text(this._newNotifications);
+		},
+		clearNotificationCount: function() {
+			this._newNotifications = 0;
+			this.$countEl.text(this._newNotifications);
+		},
+		_getTiddler: function(url, callback) {
+			var self = this;
+			$.ajax({
+				url: url,
+				dataType: 'json',
+				success: function(tiddler) {
+					if (~tiddler.tags.indexOf('follow') &&
+							(tiddler.title === '@' + self.username ||
+							tiddler.title === self.username)) {
+						callback(tiddler);
+					} else if (~tiddler.tags.indexOf('@' + self.username)){
+						callback(tiddler);
+					}
+				}
+			});
 		},
 		_promise: function(name, callback, promise) {
 			var self = this;
