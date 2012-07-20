@@ -30,14 +30,14 @@
 				'<form class="tsbar-login-classic">',
 					'<div class="tsbar-login-group">',
 						'<label>Username</label>',
-						'<input type="text" class="tsbar-login-username" name="username">',
+						'<input type="text" class="tsbar-login-username" name="username" autocorrect="off" autocapitalize="off">',
 					'</div>',
 					'<div class="tsbar-login-group">',
 						'<label>Password</label>',
 						'<input type="password" class="tsbar-login-username" name="username">',
 					'</div>',
 					'<div class="tsbar-login-footer">',
-						'<a href="#openid" class="tsbar-login-switch">',
+						'<a href="#" class="tsbar-login-switch">',
 							'use openid',
 						'</a>',
 						'<input type="submit" value="Log in">',
@@ -46,10 +46,10 @@
 				'<form class="tsbar-login-openid">',
 					'<div class="tsbar-login-group">',
 						'<label>OpenID</label>',
-						'<input type="text" class="tsbar-login-id" name="username">',
+						'<input type="text" class="tsbar-login-id" name="username" autocorrect="off" autocapitalize="off">',
 					'</div>',
 					'<div class="tsbar-login-footer">',
-						'<a href="#openid" class="tsbar-login-switch">',
+						'<a href="#" class="tsbar-login-switch">',
 							'use username/password',
 						'</a>',
 						'<input type="submit" value="Log in">',
@@ -150,9 +150,52 @@
 	}
 
 	/*
-	 * add event listeners and behaviours to clicks inside the popup
+	 * set up the login forms and make sure they do the right thing
 	 */
-	function hookupEvents() {
+	function hookupLogins() {
+		$popup.find('.tsbar-login-switch').click(function(ev) {
+			ev.preventDefault();
+			$(this).closest('form').hide()
+				.siblings('form').show();
+		});
+
+		$popup.find('form').submit(function(ev) {
+			ev.preventDefault();
+			var $form = $(this);
+
+			if ($form.hasClass('.tsbar-login-classic')) {
+				$.ajax({
+					url: '/challenge/tiddlywebplugins.tiddlyspace.cookie_form',
+					type: 'POST',
+					data: {
+						user: $form.find('.tsbar-login-username').val(),
+						password: $form.find('.tsbar-login-password').val(),
+						csrf_token: window.getCSRFToken()
+					},
+					success: function() {
+						window.location.reload();
+					},
+					error: function() {
+						$form.find('input').val('');
+					}
+				});
+			} else {
+				$.ajax({
+					url: '/challenge/tiddlywebplugins.tiddlyspace.openid',
+					type: 'POST',
+					data: {
+						openid: $form.find('.tsbar-login-username').val(),
+						csrf_token: window.getCSRFToken()
+					},
+					success: function() {
+						window.location.reload();
+					},
+					error: function() {
+						$form.find('input').val('');
+					}
+				});
+			}
+		});
 	}
 
 
@@ -344,10 +387,11 @@
 	function main() {
 		getUserDetails(function(status) {
 			populateUserDetails(status);
-			if (status.username) {
+			if (status.username !== 'GUEST') {
 				getNotifications(status.username);
+			} else {
+				hookupLogins();
 			}
-			hookupEvents();
 
 			tsbar.userWidget = tsbar.Widget({
 				el: $button,

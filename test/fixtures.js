@@ -41,6 +41,16 @@ $.mockjax({
 	responseText: '{"title":"@fnd","modified":"20120720121212","modifier":"patrick","url":"http://tiddlyspace.com","tags":["follow"],"bag":"patrick_public"}'
 });
 
+$.mockjax({
+	url: '/challenge/tiddlywebplugins.tiddlyspace.cookie_form',
+	responseText: ''
+});
+
+$.mockjax({
+	url: '/challenge/tiddlywebplugins.tiddlyspace.openid',
+	responseText: ''
+});
+
 io = {
 	connect: function() {
 		return {
@@ -59,4 +69,12 @@ io = {
 			}
 		};
 	}
+};
+
+window.location.reload = function() {
+	console.log('page reload');
+};
+
+getCSRFToken = function() {
+	return 'asdfghjki765redscvbhjuytre4dety3uhwekdshfuybj';
 };
