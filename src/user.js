@@ -135,6 +135,7 @@
 	function getNotifications(username) {
 		var activity = new Activity({
 			username: username,
+			$button: $button,
 			$countEl: $button.find('.tsbar-user-notification'),
 			$listEl: $popup.find('.tsbar-user-notification ul')
 		});
@@ -159,6 +160,7 @@
 	 * Create an Activity object to handle notifications
 	 */
 	function Activity(options) {
+		var self = this;
 		Activity.MAX_NOTIFICATIONS = 7; // on Activity, not |this|
 
 		$.extend(this, options);
@@ -171,6 +173,11 @@
 
 		// initialise the new notification variable
 		this._newNotifications = 0;
+
+		// reset the notification count on button click
+		this.$button.click(function() {
+			self.clearNotificationCount();
+		});
 	}
 
 	$.extend(Activity.prototype, {
@@ -277,7 +284,7 @@
 		},
 		clearNotificationCount: function() {
 			this._newNotifications = 0;
-			this.$countEl.text(this._newNotifications);
+			this.$countEl.text('');
 		},
 		_getTiddler: function(url, callback) {
 			var self = this;
