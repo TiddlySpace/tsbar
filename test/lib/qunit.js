@@ -1,7 +1,7 @@
 /**
  * QUnit v1.10.0pre - A JavaScript Unit Testing Framework
  *
- * http://docs.jquery.com/QUnit
+ * http://qunitjs.com
  *
  * Copyright 2012 jQuery Foundation and other contributors
  * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -17,6 +17,8 @@ var QUnit,
 	fileName = (sourceFromStacktrace( 0 ) || "" ).replace(/(:\d+)+\)?/, "").replace(/.+\//, ""),
 	toString = Object.prototype.toString,
 	hasOwn = Object.prototype.hasOwnProperty,
+	// Keep a local reference to Date (GH-283)
+	Date = window.Date,
 	defined = {
 	setTimeout: typeof window.setTimeout !== "undefined",
 	sessionStorage: (function() {
@@ -305,6 +307,7 @@ QUnit = {
 	module: function( name, testEnvironment ) {
 		config.currentModule = name;
 		config.currentModuleTestEnviroment = testEnvironment;
+		config.modules[name] = true;
 	},
 
 	asyncTest: function( testName, expected, callback ) {
@@ -599,6 +602,9 @@ config = {
 			tooltip: "Enabling this will run tests outside of a try-catch block. Makes debugging exceptions in IE reasonable. Stored as query-strings."
 		}
 	],
+
+	// Set of all modules.
+	modules: {},
 
 	// logging callback queues
 	begin: [],
@@ -916,7 +922,9 @@ QUnit.load = function() {
 	runLoggingCallbacks( "begin", QUnit, {} );
 
 	// Initialize the config, saving the execution queue
-	var banner, filter, i, label, len, main, ol, toolbar, userAgent, val, urlConfigCheckboxes,
+	var banner, filter, i, label, len, main, ol, toolbar, userAgent, val, urlConfigCheckboxes, moduleFilter,
+	    numModules = 0,
+	    moduleFilterHtml = "",
 		urlConfigHtml = "",
 		oldconfig = extend( {}, config );
 
@@ -940,6 +948,15 @@ QUnit.load = function() {
 		urlConfigHtml += "<input id='qunit-urlconfig-" + val.id + "' name='" + val.id + "' type='checkbox'" + ( config[ val.id ] ? " checked='checked'" : "" ) + " title='" + val.tooltip + "'><label for='qunit-urlconfig-" + val.id + "' title='" + val.tooltip + "'>" + val.label + "</label>";
 	}
 
+	moduleFilterHtml += "<label for='qunit-modulefilter'>Module: </label><select id='qunit-modulefilter' name='modulefilter'><option value='' " + ( config.module === undefined  ? "selected" : "" ) + ">< All Modules ></option>";
+	for ( i in config.modules ) {
+		if ( config.modules.hasOwnProperty( i ) ) {
+			numModules += 1;
+			moduleFilterHtml += "<option value='" + encodeURIComponent(i) + "' " + ( config.module === i ? "selected" : "" ) + ">" + i + "</option>";
+		}
+	}
+	moduleFilterHtml += "</select>";
+	
 	// `userAgent` initialized at top of scope
 	userAgent = id( "qunit-userAgent" );
 	if ( userAgent ) {
@@ -1002,6 +1019,19 @@ QUnit.load = function() {
 			window.location = QUnit.url( params );
 		});
 		toolbar.appendChild( urlConfigCheckboxes );
+
+		if (numModules > 1) {
+			moduleFilter = document.createElement( 'span' );
+			moduleFilter.setAttribute( 'id', 'qunit-modulefilter-container' );
+			moduleFilter.innerHTML = moduleFilterHtml;
+			addEvent( moduleFilter, "change", function() {
+				var selectBox = moduleFilter.getElementsByTagName("select")[0],
+				    selectedModule = decodeURIComponent(selectBox.options[selectBox.selectedIndex].value);
+				
+				window.location = QUnit.url( { module: ( selectedModule === "" ) ? undefined : selectedModule } );
+			});
+			toolbar.appendChild(moduleFilter);
+		}
 	}
 
 	// `main` initialized at top of scope
