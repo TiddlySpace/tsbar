@@ -392,12 +392,12 @@
 			} else {
 				hookupLogins();
 			}
-
-			tsbar.userWidget = tsbar.Widget({
-				el: $button,
-				popup: $popup
-			});
 		});
+
+        tsbar.userWidget = tsbar.Widget({
+            el: $button,
+            popup: $popup
+        });
 	}
 
 
