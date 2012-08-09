@@ -17,14 +17,14 @@ test('can create a search widget', function() {
         'the widget contains a find button');
     strictEqual(searchWidget.getWidget().find("input[value='Clear']").length, 1,
         'the widget contains a clear button');
-    strictEqual(searchWidget.getWidget().find("div:not('.popup')").length, 1,
+    strictEqual(searchWidget.getWidget().find("div:not('.tsbar-popup')").length, 1,
         'the widget contains a div area for search results');
 });
 
 asyncTest('can perform a search', 1, function() {
 
     var searchDoneCallback = function() {
-        strictEqual(searchWidget.getWidget().find("div:not('.popup')").html(),
+        strictEqual(searchWidget.getWidget().find("div:not('.tsbar-popup')").html(),
             '<div id="container"><div>some search results</div></div>', 'the search results were returned');
         start();
     };
@@ -45,7 +45,7 @@ asyncTest('can clear the search results', 2, function() {
     };
 
     var clearDoneCallback = function() {
-        strictEqual(searchWidget.getWidget().find("div:not('.popup'):empty").length, 1,
+        strictEqual(searchWidget.getWidget().find("div:not('.tsbar-popup'):empty").length, 1,
             'the search results area was cleared');
         strictEqual(searchWidget.getWidget().find("input[type='text']").val(), '',
             'the search query text was cleared');

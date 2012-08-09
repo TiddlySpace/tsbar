@@ -1,8 +1,8 @@
 function SearchWidget() {
 
     this._widget = tsbar.Widget({
-        el: '<button>Search</button>',
-        popup: '<div class="popup">' +
+        el: '<button class="tsbar-search-btn">Search</button>',
+        popup: '<div class="tsbar-popup">' +
                     '<span>Search:</span>' +
                     '<input id="query-text" type="text" name="query"/>' +
                     '<input id="search-button" type="submit" value="Find"/>' +
