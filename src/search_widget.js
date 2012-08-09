@@ -16,14 +16,14 @@ SearchWidget.prototype.getWidget = function() {
     return this._widget;
 }
 
-SearchWidget.prototype.registerListeners = function() {
-    $('#search-button').click(this._doSearch);
+SearchWidget.prototype.registerListeners = function(searchDoneCallback) {
+    $('#search-button').click({callback: searchDoneCallback}, this._doSearch);
     $('#clear-button').click(this._doClear);
 }
 
-SearchWidget.prototype._doSearch = function() {
+SearchWidget.prototype._doSearch = function(event) {
     var query = $('#query-text').val();
-    $('#search-results').load('/hsearch?q=' + query + ' #container');
+    $('#search-results').load('/hsearch?q=' + query + ' #container', event.data.callback);
 }
 
 SearchWidget.prototype._doClear = function() {
