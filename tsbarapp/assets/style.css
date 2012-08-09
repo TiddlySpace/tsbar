@@ -1,0 +1,37 @@
+.tsbar-popup {
+    display:none;
+}
+
+.open .tsbar-popup {
+    display:block;
+    z-index: 1;
+}
+
+#tsbar {
+    position:relative;
+    height:50px;
+    width:100%;
+    border:solid black;
+}
+
+.tsbar-left {
+    position:absolute;
+    left:0px;
+    top:0px;
+}
+.tsbar-middle  {
+    position:absolute;
+    left:50%;
+    margin-left:-100px;
+    top:0px;
+}
+.tsbar-right {
+    position:absolute;
+    right:0px;
+    top:0px;
+}
+
+.tsbar-user-icon {
+    width:48px;
+    height:48px;
+}

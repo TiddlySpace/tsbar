@@ -1,5 +1,5 @@
 
-.PHONY: test qunit phantomjs
+.PHONY: test qunit phantomjs setup
 
 OS := $(shell uname)
 ARCH := $(shell uname -m)
@@ -40,3 +40,8 @@ test:
 	@cd phantomjs/bin && \
     	./phantomjs ../../test/lib/run-qunit.js ../../test/index.html
 
+update:
+	cp src/*.js tsbarapp/assets
+
+serve:
+	@cd tsbarapp && tsapp serve
