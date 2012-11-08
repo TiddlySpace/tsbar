@@ -23,7 +23,8 @@ You will need to [install](https://github.com/cdent/tsapp#install) tsapp then ru
 
 Run `tsapp serve` to run the app.
 
-To keep it up-to-date run `grunt update-tsapp`.  This copies JavaScript files from src into the tsbarapp/assets folder.
+To keep it up-to-date run `grunt concat update-tsapp`.  This combines all the source files into one file and copies it
+to the assets folder in the tsapp (tsbarapp folder).
 There is a version-controlled index.html file, main.js and style.css to kick-start a basic page.
 
 This server interacts with tiddlyspace.com so you can use it with real data.
