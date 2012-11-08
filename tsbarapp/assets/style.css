@@ -31,7 +31,7 @@
     top:0px;
 }
 
-.tsbar-user-icon {
+.tsbar-user-icon, .tsbar-notification-icon {
     width:48px;
     height:48px;
 }
