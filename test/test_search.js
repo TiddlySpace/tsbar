@@ -1,4 +1,10 @@
-var searchWidget = undefined;
+var searchWidget;
+
+function performSearch() {
+    searchWidget.getWidget().find('.tsbar-widget button').click();
+    searchWidget.getWidget().find("input[type='text']").val('test');
+    searchWidget.getWidget().find("input[value='Find']").click();
+}
 
 module('search widget', {
     setup: function() {
@@ -59,10 +65,3 @@ asyncTest('can clear the search results', 2, function() {
 
     performSearch();
 });
-
-function performSearch() {
-    searchWidget.getWidget().find('.tsbar-widget button').click();
-    searchWidget.getWidget().find("input[type='text']").val('test');
-    searchWidget.getWidget().find("input[value='Find']").click();
-}
-

@@ -1,4 +1,4 @@
-fixtures = {
+var fixtures = {
 	loggedIn: true
 };
 
@@ -80,6 +80,6 @@ window.location.reload = function() {
 	console.log('page reload');
 };
 
-getCSRFToken = function() {
+window.getCSRFToken = function() {
 	return 'asdfghjki765redscvbhjuytre4dety3uhwekdshfuybj';
 };
