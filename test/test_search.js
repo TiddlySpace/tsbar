@@ -35,10 +35,11 @@ asyncTest('can perform a search', 1, function() {
         start();
     };
 
+    searchWidget.registerListeners(searchDoneCallback);
+
     tsbar.define('left', searchWidget.getWidget());
     var toolbar = tsbar.render();
     $('#sandbox').append(toolbar);
-    searchWidget.registerListeners(searchDoneCallback);
 
     performSearch();
 });
@@ -58,10 +59,11 @@ asyncTest('can clear the search results', 2, function() {
         start();
     };
 
+    searchWidget.registerListeners(searchDoneCallback);
+
     tsbar.define('left', searchWidget.getWidget());
     var toolbar = tsbar.render();
     $('#sandbox').append(toolbar);
-    searchWidget.registerListeners(searchDoneCallback);
 
     performSearch();
 });

@@ -1,6 +1,7 @@
 $(document).ready(function() {
     var searchWidget = new SearchWidget();
     tsbar.define('left', searchWidget.getWidget());
+    searchWidget.registerListeners();
 
     tsbar.define('middle', tsbar.Widget({
         el: '<button>Middle</button>',
@@ -10,5 +11,5 @@ $(document).ready(function() {
     tsbar.define('right', tsbar.userWidget);
 
     $('#bar').html(tsbar.render());
-    searchWidget.registerListeners();
+
 });
