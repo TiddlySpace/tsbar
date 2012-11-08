@@ -1,0 +1,16 @@
+{
+    "name":"tsbar",
+    "version":"0.0.1",
+    "description":"A toolbar for Tiddlyspace that can be re-used in Tiddly SPAs",
+    "main":"grunt.js",
+    "repository":{
+        "type":"git",
+        "url":"git://github.com/TiddlySpace/tsbar.git"
+    },
+    "keywords":[
+        "Tiddlyspace",
+        "tsbar"
+    ],
+    "author":"Osmosoft",
+    "license":"BSD"
+}
