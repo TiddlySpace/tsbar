@@ -267,7 +267,7 @@
 
 			var $li = $(template).find('.tsbar-notification-icon')
 					.attr('src', 'http://tiddlyspace.com/bags/' + tiddler.bag +
-						'_public/tiddlers/SiteIcon')
+						'/tiddlers/SiteIcon')
 				.end().find('.tsbar-notification-user')
 					.text(tiddler.modifier)
 					.attr('href', 'http://' + tiddler.modifier +
