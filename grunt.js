@@ -1,6 +1,8 @@
 /*global module:false*/
 module.exports = function (grunt) {
 
+    var srcFiles = ['src/search.js', 'src/user.js'];
+
     grunt.initConfig({
         pkg:'<json:package.json>',
         meta:{
@@ -18,13 +20,13 @@ module.exports = function (grunt) {
         },
         concat:{
             dist:{
-                src:['<banner:meta.banner>', '<file_strip_banner:src/<%= pkg.name %>.js>'],
+                src:['<banner:meta.banner>', '<file_strip_banner:src/<%= pkg.name %>.js>', srcFiles],
                 dest:'dist/<%= pkg.name %>-<%= pkg.version %>.js'
             }
         },
         min:{
             dist:{
-                src:['<banner:meta.banner>', '<config:concat.dist.dest>'],
+                src:['<banner:meta.banner>', '<config:concat.dist.dest>', srcFiles],
                 dest:'dist/<%= pkg.name %>-<%= pkg.version %>.min.js'
             }
         },
@@ -61,12 +63,10 @@ module.exports = function (grunt) {
     // Default task.
     grunt.registerTask('default', 'lint qunit concat min');
 
-    grunt.registerTask('update-tsapp', 'copy source files to the tsapp for testing.', function() {
+    grunt.registerTask('update-tsapp', 'copy tsbar file to the tsapp for testing.', function() {
 
-        grunt.file.recurse('src', function(absolutePath, rootDir, subDir, fileName) {
-
-            grunt.file.copy(absolutePath, 'tsbarapp/assets/' + fileName);
-        });
+        this.requires('concat');
+        grunt.file.copy('dist/tsbar-' + grunt.config('pkg.version') + '.js', 'tsbarapp/assets/tsbar.js');
     });
 
 };
