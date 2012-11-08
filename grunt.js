@@ -1,7 +1,6 @@
 /*global module:false*/
 module.exports = function (grunt) {
 
-    // Project configuration.
     grunt.initConfig({
         pkg:'<json:package.json>',
         meta:{
@@ -20,13 +19,13 @@ module.exports = function (grunt) {
         concat:{
             dist:{
                 src:['<banner:meta.banner>', '<file_strip_banner:src/<%= pkg.name %>.js>'],
-                dest:'dist/<%= pkg.name %>.js'
+                dest:'dist/<%= pkg.name %>-<%= pkg.version %>.js'
             }
         },
         min:{
             dist:{
                 src:['<banner:meta.banner>', '<config:concat.dist.dest>'],
-                dest:'dist/<%= pkg.name %>.min.js'
+                dest:'dist/<%= pkg.name %>-<%= pkg.version %>.min.js'
             }
         },
         watch:{
