@@ -30,7 +30,7 @@ module.exports = function (grunt) {
             }
         },
         watch:{
-            files:'<config:lint.files>',
+            files:['<config:lint.files>', 'test/*.js'],
             tasks:'lint qunit'
         },
         jshint:{
@@ -61,5 +61,13 @@ module.exports = function (grunt) {
 
     // Default task.
     grunt.registerTask('default', 'lint qunit concat min');
+
+    grunt.registerTask('update-tsapp', 'copy source files to the tsapp for testing.', function() {
+
+        grunt.file.recurse('src', function(absolutePath, rootDir, subDir, fileName) {
+
+            grunt.file.copy(absolutePath, 'tsbarapp/assets/' + fileName);
+        });
+    });
 
 };
