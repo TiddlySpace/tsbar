@@ -27,7 +27,7 @@
         this.$popup.find('#clear-button').click(this._doClear);
     };
 
-    SearchWidget.prototype._doSearch = function(event) {
+    SearchWidget.prototype._doSearch = function() {
         var query = $('#query-text').val();
         $('#search-results').load('/hsearch?q=' + query + ' #container');
     };
