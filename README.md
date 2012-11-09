@@ -10,9 +10,7 @@ Development Setup
 For developing the TiddlySpace Bar you will need:
 
 * [node](nodejs.org)
-
 * [grunt](http://gruntjs.com/)
-
 * phantomjs  - `npm install -g phantomjs`
 
 Run `npm install` for first time use as well, this will fetch the required node modules that will help development.
