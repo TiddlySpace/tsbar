@@ -11,9 +11,13 @@ describe('Search Widget', function() {
     
     beforeEach(function () {
 
-        setFixtures('<div id="sandbox"></div>');
         tsbar.clear();
         searchWidget = tsbar.searchWidget;
+    });
+
+    afterEach(function () {
+
+        $('#sandbox').html('');
     });
 
     describe('Search Widget creation', function() {
@@ -40,7 +44,7 @@ describe('Search Widget', function() {
 
     });
 
-    describe('Peforming searches', function() {
+    describe('Performing searches', function() {
 
         beforeEach(function () {
 
@@ -49,23 +53,7 @@ describe('Search Widget', function() {
             $('#sandbox').append(toolbar);
         });
 
-        xit('should render some search results when the search button is clicked', function() {
-
-            runs(function() {
-
-                performSearch();
-            });
-
-            waits(500);
-
-            runs(function() {
-
-                expect(searchWidget.find("div:not('.tsbar-popup')").html()).toEqual(
-                    '<div id="container"><div>some search results</div></div>');
-            });
-        });
-
-        it('should clear the search results area and search query text', function() {
+        it('should render search results then clear the search results area and search query text', function() {
 
             runs(function() {
 
@@ -77,19 +65,20 @@ describe('Search Widget', function() {
                 return searchWidget.find("div:not('.tsbar-popup')").html() ===
                 '<div id="container"><div>some search results</div></div>';
 
-            }, 'the search should be performed', 500);
+            }, 'the search results to appear after the search button was clicked', 500);
 
             runs(function() {
 
                 searchWidget.find("input[value='Clear']").trigger('click');
             });
 
-            waits(500);
+            waitsFor(function() {
+                return searchWidget.find("div:not('.tsbar-popup'):empty").length === 1;
+            }, 'the search results to clear after the clear button was clicked', 500);
 
-            runs(function() {
-                expect(searchWidget.find("div:not('.tsbar-popup'):empty").length).toEqual(1);
-                expect(searchWidget.find("input[type='text']").val()).toEqual('');
-            });
+            waitsFor(function() {
+                return searchWidget.find("input[type='text']").val() === '';
+            }, 'the query text to clear after the clear button was clicked', 500);
         });
     });
 });
