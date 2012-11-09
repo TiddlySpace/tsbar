@@ -2,8 +2,12 @@ describe('Toolbar', function() {
 
     beforeEach(function () {
 
-        setFixtures('<div id="sandbox"></div>');
         tsbar.clear();
+    });
+
+    afterEach(function () {
+
+        $('#sandbox').html('');
     });
 
     it('should be initialised on script inclusion', function() {

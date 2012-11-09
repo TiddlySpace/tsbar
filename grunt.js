@@ -19,7 +19,8 @@ module.exports = function (grunt) {
             src:['test/lib/jquery.js', 'test/lib/jquery.mockjax.js', 'test/fixtures.js', 'src/tsbar.js', 'src/*.js'],
             specs: 'test/*Spec.js',
             helpers: 'test/lib/jasmine-jquery-1.3.1.js',
-            timeout: 10000
+            timeout: 10000,
+            template: 'test/SpecRunner.tmpl'
         },
         concat:{
             dist:{
