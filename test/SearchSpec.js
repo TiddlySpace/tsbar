@@ -11,6 +11,7 @@ describe('Search Widget', function() {
     
     beforeEach(function () {
 
+        tsbar.resetUserWidget();
         tsbar.clear();
         searchWidget = tsbar.searchWidget;
     });
@@ -53,6 +54,7 @@ describe('Search Widget', function() {
             $('#sandbox').append(toolbar);
         });
 
+        //TODO: Split into 2 tests - one for search results and one for clearing the results.
         it('should render search results then clear the search results area and search query text', function() {
 
             runs(function() {

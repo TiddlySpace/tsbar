@@ -46,4 +46,9 @@
 
     main();
 
+    /*
+     * Test suite can get a handle on this for clean slate testing.
+     */
+    tsbar.resetSearchWidget = main;
+
 }(window, jQuery));
