@@ -15,5 +15,8 @@
     "license":"BSD",
     "dependencies":{
         "grunt-jasmine-runner":"0.5.x"
+    },
+    "scripts": {
+        "test": "grunt jasmine"
     }
 }

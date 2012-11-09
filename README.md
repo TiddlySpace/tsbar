@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/pads/tsbar.png)](https://travis-ci.org/pads/tsbar)
+
 TiddlySpace Bar
 ===============
 
