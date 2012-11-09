@@ -96,14 +96,20 @@
             '</li>'].join('')
     };
 
+    function getSiteIcon(username) {
+        if (username === 'GUEST') {
+            return 'http://tiddlyspace.com/SiteIcon';
+        }
+        return 'http://tiddlyspace.com/bags/' + username +
+        '_public/tiddlers/SiteIcon';
+    }
     /*
      * fill in areas in HTML that require data from /status
      * hide areas that we don't need to see
      */
     function populateUserDetails(status) {
         var username = status.username,
-            siteIcon = 'http://tiddlyspace.com/bags/' + username +
-                '_public/tiddlers/SiteIcon',
+            siteIcon = getSiteIcon(username),
             loggedIn = username !== 'GUEST';
 
         $button.find('img.tsbar-user-icon').attr('src', siteIcon);
@@ -111,10 +117,10 @@
 
         $popup.find('.tsbar-logged-' + (loggedIn ? 'out' : 'in')).remove();
 
-        if (!loggedIn) {
-            $popup.find('.tsbar-login-openid').hide();
-        } else {
+        if (loggedIn) {
             $popup.find('.tsbar-user-name').text(username);
+        } else {
+            $popup.find('.tsbar-login-openid').hide();
         }
     }
 
@@ -403,7 +409,11 @@
         });
     }
 
-
     main();
+
+    /*
+     * Test suite can get a handle on this for clean slate testing.
+     */
+    tsbar.resetUserWidget = main;
 
 }(jQuery));
