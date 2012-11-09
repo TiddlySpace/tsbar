@@ -15,8 +15,11 @@ module.exports = function (grunt) {
         lint:{
             files:['grunt.js', 'src/**/*.js']
         },
-        qunit:{
-            files:['test/**/*.html']
+        jasmine: {
+            src:['test/lib/jquery.js', 'test/lib/jquery.mockjax.js', 'test/fixtures.js', 'src/tsbar.js', 'src/*.js'],
+            specs: 'test/*Spec.js',
+            helpers: 'test/lib/jasmine-jquery-1.3.1.js',
+            timeout: 10000
         },
         concat:{
             dist:{
@@ -31,8 +34,8 @@ module.exports = function (grunt) {
             }
         },
         watch:{
-            files:['<config:lint.files>', 'test/*.js'],
-            tasks:'lint qunit'
+            files:['<config:lint.files>', '<config:jasmine.specs>'],
+            tasks:'lint jasmine'
         },
         jshint:{
             options:{
@@ -60,13 +63,13 @@ module.exports = function (grunt) {
         uglify:{}
     });
 
-    // Default task.
-    grunt.registerTask('default', 'lint qunit concat min');
+    grunt.registerTask('default', 'lint jasmine concat min');
 
-    grunt.registerTask('update-tsapp', 'copy tsbar file to the tsapp for testing.', function() {
+    grunt.registerTask('update-tsapp', 'copy tsbar file to the tsapp for testing.', function () {
 
         this.requires('concat');
         grunt.file.copy('dist/tsbar-' + grunt.config('pkg.version') + '.js', 'tsbarapp/assets/tsbar.js');
     });
 
+    grunt.loadNpmTasks('grunt-jasmine-runner');
 };

@@ -12,5 +12,8 @@
         "tsbar"
     ],
     "author":"Osmosoft",
-    "license":"BSD"
+    "license":"BSD",
+    "dependencies":{
+        "grunt-jasmine-runner":"0.5.x"
+    }
 }

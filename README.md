@@ -4,8 +4,8 @@ TiddlySpace Bar
 A toolbar for [TiddlySpace](http://tiddlyspace.com).
 Designed to replace the backstage area and provide a more consistent environment across the whole of TiddlySpace.
 
-Requirements
-============
+Development Setup
+=================
 
 For developing the TiddlySpace Bar you will need:
 
@@ -14,6 +14,8 @@ For developing the TiddlySpace Bar you will need:
 * [grunt](http://gruntjs.com/)
 
 * phantomjs  - `npm install -g phantomjs`
+
+Run `npm install` for first time use as well, this will fetch the required node modules that will help development.
 
 Hosting the Bar
 ===============
@@ -32,6 +34,6 @@ This server interacts with tiddlyspace.com so you can use it with real data.
 Testing
 =======
 
-Just run `grunt qunit`
+Just run `grunt jasmine`
 
-To run tests in a browser open test/index.html.
+To run tests in a browser run `grunt jasmine-server`.

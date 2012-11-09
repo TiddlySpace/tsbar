@@ -1,4 +1,4 @@
-var fixtures = {
+fixtures = {
 	loggedIn: true
 };
 
