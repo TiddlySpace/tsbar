@@ -11,7 +11,7 @@ describe('Search Widget', function() {
     
     beforeEach(function () {
 
-        tsbar.resetUserWidget();
+        tsbar.resetSearchWidget();
         tsbar.clear();
         searchWidget = tsbar.searchWidget;
     });
