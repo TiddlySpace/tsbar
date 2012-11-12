@@ -34,13 +34,13 @@ tsbar.initUserWidget = function ($) {
         '</div>',
         '<div class="tsbar-login-group">',
         '<label>Password</label>',
-        '<input type="password" class="tsbar-login-username" name="username">',
+        '<input type="password" class="tsbar-login-password" name="username">',
         '</div>',
         '<div class="tsbar-login-footer">',
         '<a href="#" class="tsbar-login-switch">',
         'use openid',
         '</a>',
-        '<input type="submit" value="Log in">',
+        '<input class="tsbar-login-btn" type="submit" value="Log in">',
         '</div>',
         '</form>',
         '<form class="tsbar-login-openid">',
@@ -169,7 +169,7 @@ tsbar.initUserWidget = function ($) {
             ev.preventDefault();
             var $form = $(this);
 
-            if ($form.hasClass('.tsbar-login-classic')) {
+            if ($form.hasClass('tsbar-login-classic')) {
                 $.ajax({
                     url:'/challenge/tiddlywebplugins.tiddlyspace.cookie_form',
                     type:'POST',
