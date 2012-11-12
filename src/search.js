@@ -1,4 +1,8 @@
-(function(exports, $) {
+/*
+ * Provide a search widget with a popup to enter and clear search terms.
+ * Test suite can get a handle on this for clean slate testing.
+ */
+tsbar.initSearchWidget = function(exports, $) {
 
     function SearchWidget() {
 
@@ -45,5 +49,11 @@
     }
 
     main();
+
+};
+
+(function(exports, $) {
+
+    tsbar.initSearchWidget(exports, $);
 
 }(window, jQuery));

@@ -17,6 +17,6 @@
         "grunt-jasmine-runner":"0.5.x"
     },
     "scripts": {
-        "test": "grunt jasmine"
+        "test": "grunt lint jasmine"
     }
 }

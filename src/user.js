@@ -1,8 +1,8 @@
 /*
- * Provide a user widget with a popup showing information and notifications
+ * Provide a user widget with a popup showing information and notifications.
+ * Test suite can get a handle on this for clean slate testing.
  */
-
-(function ($) {
+tsbar.initUserWidget = function ($) {
     /*
      * define a button template
      */
@@ -34,13 +34,13 @@
         '</div>',
         '<div class="tsbar-login-group">',
         '<label>Password</label>',
-        '<input type="password" class="tsbar-login-username" name="username">',
+        '<input type="password" class="tsbar-login-password" name="username">',
         '</div>',
         '<div class="tsbar-login-footer">',
         '<a href="#" class="tsbar-login-switch">',
         'use openid',
         '</a>',
-        '<input type="submit" value="Log in">',
+        '<input class="tsbar-login-btn" type="submit" value="Log in">',
         '</div>',
         '</form>',
         '<form class="tsbar-login-openid">',
@@ -96,14 +96,20 @@
             '</li>'].join('')
     };
 
+    function getSiteIcon(username) {
+        if (username === 'GUEST') {
+            return 'http://tiddlyspace.com/SiteIcon';
+        }
+        return 'http://tiddlyspace.com/bags/' + username +
+        '_public/tiddlers/SiteIcon';
+    }
     /*
      * fill in areas in HTML that require data from /status
      * hide areas that we don't need to see
      */
     function populateUserDetails(status) {
         var username = status.username,
-            siteIcon = 'http://tiddlyspace.com/bags/' + username +
-                '_public/tiddlers/SiteIcon',
+            siteIcon = getSiteIcon(username),
             loggedIn = username !== 'GUEST';
 
         $button.find('img.tsbar-user-icon').attr('src', siteIcon);
@@ -111,10 +117,10 @@
 
         $popup.find('.tsbar-logged-' + (loggedIn ? 'out' : 'in')).remove();
 
-        if (!loggedIn) {
-            $popup.find('.tsbar-login-openid').hide();
-        } else {
+        if (loggedIn) {
             $popup.find('.tsbar-user-name').text(username);
+        } else {
+            $popup.find('.tsbar-login-openid').hide();
         }
     }
 
@@ -163,7 +169,7 @@
             ev.preventDefault();
             var $form = $(this);
 
-            if ($form.hasClass('.tsbar-login-classic')) {
+            if ($form.hasClass('tsbar-login-classic')) {
                 $.ajax({
                     url:'/challenge/tiddlywebplugins.tiddlyspace.cookie_form',
                     type:'POST',
@@ -403,7 +409,12 @@
         });
     }
 
-
     main();
+
+};
+
+(function($) {
+
+    tsbar.initUserWidget($);
 
 }(jQuery));
