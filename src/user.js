@@ -1,8 +1,8 @@
 /*
- * Provide a user widget with a popup showing information and notifications
+ * Provide a user widget with a popup showing information and notifications.
+ * Test suite can get a handle on this for clean slate testing.
  */
-
-(function ($) {
+tsbar.initUserWidget = function ($) {
     /*
      * define a button template
      */
@@ -411,9 +411,10 @@
 
     main();
 
-    /*
-     * Test suite can get a handle on this for clean slate testing.
-     */
-    tsbar.resetUserWidget = main;
+};
+
+(function($) {
+
+    tsbar.initUserWidget($);
 
 }(jQuery));

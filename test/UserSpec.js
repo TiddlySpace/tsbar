@@ -4,7 +4,7 @@ describe('User Widget', function() {
 
     beforeEach(function () {
 
-        tsbar.resetUserWidget();
+        tsbar.initUserWidget($);
         tsbar.clear();
         userWidget = tsbar.userWidget;
 
