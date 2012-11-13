@@ -19,7 +19,7 @@ tsbar.initUserWidget = function (window, $) {
     var $popup = $([
         '<div class="tsbar-popup">',
         '<div class="tsbar-user-topbar">',
-        '<div class="tsbar-logged-out">',
+        '<div id="tsbar-login-message" class="tsbar-logged-out">',
         'You are not logged in',
         '</div>',
         '<div class="tsbar-logged-in">',
@@ -183,7 +183,8 @@ tsbar.initUserWidget = function (window, $) {
                         window.location.reload();
                     },
                     error:function () {
-                        $form.find('input').val('');
+                        $popup.find('#tsbar-login-message').addClass('tsbar-error');
+                        $popup.find('#tsbar-login-message').text('Error - Unauthorised');
                     }
                 });
             } else {

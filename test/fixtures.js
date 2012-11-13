@@ -43,7 +43,13 @@ $.mockjax({
 
 $.mockjax({
 	url: '/challenge/tiddlywebplugins.tiddlyspace.cookie_form',
-	responseText: ''
+	response: function(settings) {
+        if(settings.data.password && settings.data.password === 'letmein') {
+            this.responseText = '';
+        } else {
+            this.status = 401;
+        }
+    }
 });
 
 $.mockjax({

@@ -102,10 +102,32 @@ describe('User Widget', function() {
 
             }, 'the login area to be removed', 1000);
 
-            runs(function () {
+            runs(function() {
 
                 expect(userWidget.find('.tsbar-logged-in').size()).toEqual(2);
             });
+        });
+
+        it('should show an error message when a login fails', function() {
+
+            runs(function() {
+
+                userWidget.find('.tsbar-login-username').val('pads');
+                userWidget.find('.tsbar-login-password').val('ha><0r');
+                userWidget.find('.tsbar-login-btn').click();
+            });
+
+            waitsFor(function() {
+
+                return userWidget.find('#tsbar-login-message').hasClass('tsbar-error') === true;
+
+            }, 'the login error message to appear', 500);
+
+            runs(function() {
+
+                expect(userWidget.find('#tsbar-login-message').text()).toEqual('Error - Unauthorised');
+            });
+
         });
 
     });
