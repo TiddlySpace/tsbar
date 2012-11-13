@@ -35,7 +35,7 @@ module.exports = function (grunt) {
             }
         },
         watch:{
-            files:['<config:lint.files>', '<config:jasmine.specs>'],
+            files:['test/fixtures.js', '<config:lint.files>', '<config:jasmine.specs>'],
             tasks:'lint jasmine'
         },
         jshint:{
