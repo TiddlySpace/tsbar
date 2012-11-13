@@ -2,7 +2,7 @@
  * Provide a user widget with a popup showing information and notifications.
  * Test suite can get a handle on this for clean slate testing.
  */
-tsbar.initUserWidget = function ($) {
+tsbar.initUserWidget = function (window, $) {
     /*
      * define a button template
      */
@@ -23,7 +23,7 @@ tsbar.initUserWidget = function ($) {
         'You are not logged in',
         '</div>',
         '<div class="tsbar-logged-in">',
-        '<button class="tsbar-logout">Log out</button>',
+        '<button class="tsbar-logout-btn">Log out</button>',
         '</div>',
         '</div>',
         '<div class="tsbar-logged-out">',
@@ -142,6 +142,7 @@ tsbar.initUserWidget = function ($) {
         var activity = new Activity({
             username:username,
             $button:$button,
+            $logoutButton:$popup.find('.tsbar-logout-btn'),
             $countEl:$button.find('.tsbar-user-notification'),
             $listEl:$popup.find('.tsbar-user-notification ul')
         });
@@ -227,6 +228,19 @@ tsbar.initUserWidget = function ($) {
         // reset the notification count on button click
         this.$button.click(function () {
             self.clearNotificationCount();
+        });
+
+        this.$logoutButton.click(function () {
+            $.ajax({
+                url:'/logout',
+                type:'POST',
+                data:{
+                    csrf_token:window.getCSRFToken()
+                },
+                success:function () {
+                    window.location.reload();
+                }
+            });
         });
     }
 
@@ -318,7 +332,7 @@ tsbar.initUserWidget = function ($) {
         listen:function () {
             var self = this;
             if ('io' in window) {
-                var socket = io.connect('http://tiddlyspace.com:8081');
+                var socket = window.io.connect('http://tiddlyspace.com:8081');
                 socket.on('connect', function () {
                     socket.emit('subscribe', 'tags/@' + self.username);
                     socket.emit('subscribe', 'tags/follow');
@@ -389,7 +403,6 @@ tsbar.initUserWidget = function ($) {
         ));
     }
 
-
     /*
      * Create the widget and register it
      */
@@ -413,8 +426,8 @@ tsbar.initUserWidget = function ($) {
 
 };
 
-(function($) {
+(function(window, $) {
 
-    tsbar.initUserWidget($);
+    tsbar.initUserWidget(window, $);
 
-}(jQuery));
+}(window, jQuery));

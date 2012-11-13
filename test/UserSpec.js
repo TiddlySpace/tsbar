@@ -2,15 +2,57 @@ describe('User Widget', function() {
 
     var userWidget
 
-    beforeEach(function () {
-
-        tsbar.initUserWidget($);
+    function setupPage() {
+        tsbar.initUserWidget(mockWindow, $);
         tsbar.clear();
         userWidget = tsbar.userWidget;
 
+        tsbar.define('right', userWidget);
+        $('#sandbox').append(tsbar.render());
+    }
+
+    var mockWindow = {
+        io: {
+            connect: function() {
+                return {
+                    emit: function(action, data) {
+                    },
+                    on: function(tiddler, callback) {
+                        setTimeout(function() {
+                            callback('/bags/colm_public/tiddlers/quux');
+                        }, 100);
+                        setTimeout(function() {
+                            callback('/bags/cdent_public/tiddlers/@bengillies');
+                        }, 100);
+                        setTimeout(function() {
+                            callback('/bags/patrick_public/tiddlers/@fnd');
+                        }, 100);
+                    }
+                };
+            }
+        },
+        location: {
+            reload: function() {
+                if(fixtures.loggedIn) {
+                    fixtures.loggedIn = false;
+                } else {
+                    fixtures.loggedIn = true;
+                }
+                setupPage();
+                console.log('page reloaded');
+            }
+        },
+        getCSRFToken: function() {
+            return 'asdfghjki765redscvbhjuytre4dety3uhwekdshfuybj';
+        }
+    };
+
+    beforeEach(function() {
+
+        setupPage();
     });
 
-    afterEach(function () {
+    afterEach(function() {
 
         $('#sandbox').html('');
     });
@@ -19,9 +61,6 @@ describe('User Widget', function() {
 
         beforeEach(function() {
 
-            tsbar.define('right', userWidget);
-            var toolbar = tsbar.render();
-            $('#sandbox').append(toolbar);
             fixtures.loggedIn = false;
         });
 
@@ -48,7 +87,7 @@ describe('User Widget', function() {
             });
         });
 
-        xit('should be able to login and view the notifications area', function() {
+        it('should be able to login and view the notifications area', function() {
 
             waitsFor(function() {
 
@@ -67,7 +106,7 @@ describe('User Widget', function() {
 
                 return userWidget.find('.tsbar-logged-out').size() === 0;
 
-            }, 'the login area to be removed', 500);
+            }, 'the login area to be removed', 1000);
 
             runs(function () {
 
@@ -81,9 +120,6 @@ describe('User Widget', function() {
 
         beforeEach(function() {
 
-            tsbar.define('right', userWidget);
-            tsbar.render();
-            $('#sandbox').append(toolbar);
             fixtures.loggedIn = true;
         });
 

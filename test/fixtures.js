@@ -55,31 +55,3 @@ $.mockjax({
     url: '/hsearch?q=test',
     responseText: '<body><div id="container"><div>some search results</div></div></body>'
 });
-
-io = {
-	connect: function() {
-		return {
-			emit: function(action, data) {
-			},
-			on: function(tiddler, callback) {
-				setTimeout(function() {
-					callback('/bags/colm_public/tiddlers/quux');
-				}, 100);
-				setTimeout(function() {
-					callback('/bags/cdent_public/tiddlers/@bengillies');
-				}, 100);
-				setTimeout(function() {
-					callback('/bags/patrick_public/tiddlers/@fnd');
-				}, 100);
-			}
-		};
-	}
-};
-
-window.location.reload = function() {
-	console.log('page reload');
-};
-
-window.getCSRFToken = function() {
-	return 'asdfghjki765redscvbhjuytre4dety3uhwekdshfuybj';
-};
