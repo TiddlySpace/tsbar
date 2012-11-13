@@ -52,6 +52,11 @@ $.mockjax({
 });
 
 $.mockjax({
+    url: '/logout',
+    responseText: ''
+});
+
+$.mockjax({
     url: '/hsearch?q=test',
     responseText: '<body><div id="container"><div>some search results</div></div></body>'
 });

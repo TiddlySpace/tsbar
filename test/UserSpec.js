@@ -62,6 +62,12 @@ describe('User Widget', function() {
         beforeEach(function() {
 
             fixtures.loggedIn = false;
+
+            waitsFor(function() {
+
+                return userWidget.find('.tsbar-logged-in').size() === 0;
+
+            }, 'the notifications area to be removed', 500);
         });
 
         it('should initialise with the Tiddlyspace site icon', function() {
@@ -75,12 +81,6 @@ describe('User Widget', function() {
 
         it('should only have the login form present', function() {
 
-            waitsFor(function() {
-
-                return userWidget.find('.tsbar-logged-in').size() === 0;
-
-            }, 'the notifications area to be removed', 500);
-
             runs(function () {
 
                 expect(userWidget.find('.tsbar-logged-out').size()).toEqual(2);
@@ -88,12 +88,6 @@ describe('User Widget', function() {
         });
 
         it('should be able to login and view the notifications area', function() {
-
-            waitsFor(function() {
-
-                return userWidget.find('.tsbar-logged-in').size() === 0;
-
-            }, 'the notifications area to be removed', 500);
 
             runs(function() {
 
@@ -121,6 +115,12 @@ describe('User Widget', function() {
         beforeEach(function() {
 
             fixtures.loggedIn = true;
+
+            waitsFor(function() {
+
+                return userWidget.find('.tsbar-logged-out').size() === 0;
+
+            }, 'the login area to be removed', 500);
         });
 
         it("should initialise with the user's site icon", function() {
@@ -133,17 +133,30 @@ describe('User Widget', function() {
             }, "the user's site icon to appear", 500);
         });
 
-        it('should not have the login form present', function() {
-
-            waitsFor(function() {
-
-                return userWidget.find('.tsbar-logged-out').size() === 0;
-
-            }, 'the login area to be removed', 500);
+        it('should have the notifications area present', function() {
 
             runs(function () {
 
                 expect(userWidget.find('.tsbar-logged-in').size()).toEqual(2);
+            });
+        });
+
+        it('should be able to logout and view the login form', function() {
+
+            runs(function() {
+
+                userWidget.find('.tsbar-logout-btn').click();
+            });
+
+            waitsFor(function() {
+
+                return userWidget.find('.tsbar-logged-in').size() === 0;
+
+            }, 'the notifications area to be removed', 1000);
+
+            runs(function () {
+
+                expect(userWidget.find('.tsbar-logged-out').size()).toEqual(2);
             });
         });
     });
