@@ -8,12 +8,12 @@ tsbar.initSearchWidget = function(exports, $) {
 
         this.$el = $('<button class="tsbar-search-btn">Search</button>');
 
-        this.$popup = $('<div class="tsbar-popup">' +
+        this.$popup = $('<div class="tsbar-popup tsbar-search-widget">' +
             '<span>Search:</span>' +
-            '<input id="query-text" type="text" name="query"/>' +
-            '<input id="search-button" type="submit" value="Find"/>' +
-            '<input id="clear-button" type="submit" value="Clear"/>' +
-            '<div id="search-results"></div>' +
+            '<input id="tsbar-query-text" type="text" name="query"/>' +
+            '<input id="tsbar-search-button" type="submit" value="Find"/>' +
+            '<input id="tsbar-clear-button" type="submit" value="Clear"/>' +
+            '<div id="tsbar-search-results"></div>' +
             '</div>');
 
         this._widget = tsbar.Widget({
@@ -27,18 +27,18 @@ tsbar.initSearchWidget = function(exports, $) {
     };
 
     SearchWidget.prototype._registerListeners = function() {
-        this.$popup.find('#search-button').click(this._doSearch);
-        this.$popup.find('#clear-button').click(this._doClear);
+        this.$popup.find('#tsbar-search-button').click(this._doSearch);
+        this.$popup.find('#tsbar-clear-button').click(this._doClear);
     };
 
     SearchWidget.prototype._doSearch = function() {
-        var query = $('#query-text').val();
-        $('#search-results').load('/hsearch?q=' + query + ' #container');
+        var query = $('#tsbar-query-text').val();
+        $('#tsbar-search-results').load('/hsearch?q=' + query + ' #container');
     };
 
     SearchWidget.prototype._doClear = function() {
-        $('#search-results').html('');
-        $('#query-text').val('');
+        $('#tsbar-search-results').html('');
+        $('#tsbar-query-text').val('');
     };
 
     function main() {

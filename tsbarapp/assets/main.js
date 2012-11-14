@@ -4,7 +4,7 @@ $(document).ready(function() {
 
     tsbar.define('middle', tsbar.Widget({
         el: '<button>Middle</button>',
-        popup: '<div class="popup">This is the Middle Popup</div>'
+        popup: '<div class="tsbar-popup">This is the Middle Popup</div>'
     }));
 
     tsbar.define('right', tsbar.userWidget);

@@ -17,7 +17,7 @@ tsbar.initUserWidget = function (window, $) {
      * define a popup template
      */
     var $popup = $([
-        '<div class="tsbar-popup">',
+        '<div class="tsbar-popup tsbar-user-widget">',
         '<div class="tsbar-user-topbar">',
         '<div id="tsbar-login-message" class="tsbar-logged-out">',
         'You are not logged in',
@@ -63,10 +63,11 @@ tsbar.initUserWidget = function (window, $) {
         '<a href="#">Click to Edit</a>',
         '</div>',
         '<div class="tsbar-user-info">',
-        '<h2 class="tsbar-user-name"></h2>',
         '<a href="#" class="tsbar-user-profile">',
         'View Profile',
         '</a>',
+        '<h2 class="tsbar-user-name"></h2>',
+        '<hr>',
         '</div>',
         '</div>',
         '<div class="tsbar-user-notification">',
