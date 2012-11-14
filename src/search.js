@@ -6,15 +6,10 @@ tsbar.initSearchWidget = function(exports, $) {
 
     function SearchWidget() {
 
-        this.$el = $('<button class="tsbar-search-btn">Search</button>');
-
-        this.$popup = $('<div class="tsbar-popup tsbar-search-widget">' +
-            '<span>Search:</span>' +
-            '<input id="tsbar-query-text" type="text" name="query"/>' +
-            '<input id="tsbar-search-button" type="submit" value="Find"/>' +
-            '<input id="tsbar-clear-button" type="submit" value="Clear"/>' +
-            '<div id="tsbar-search-results"></div>' +
-            '</div>');
+        this.$compiledTemplate = $(exports.JST["src/templates/search.hbs"](Handlebars));
+        //TODO: this is a hack as the pre-compiled templates have carriage returns which confuses jquery
+        this.$el = $(this.$compiledTemplate[0]);
+        this.$popup = $(this.$compiledTemplate[2]);
 
         this._widget = tsbar.Widget({
             el: this.$el,

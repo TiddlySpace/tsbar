@@ -17,6 +17,8 @@ For developing the TiddlySpace Bar you will need:
 
 Run `npm install` for first time use as well, this will fetch the required node modules that will help development.
 
+Run `grunt` by itself to run all the required tasks to build and deploy the bar.
+
 Hosting the Bar
 ===============
 
@@ -25,15 +27,17 @@ You will need to [install](https://github.com/cdent/tsapp#install) tsapp then ru
 
 Run `tsapp serve` to run the app.
 
-To keep it up-to-date run `grunt concat update-tsapp`.  This combines all the source files into one file and copies it
-to the assets folder in the tsapp (tsbarapp folder).
+To keep it up-to-date run `grunt handlebars concat update-tsapp`.
+This compiles handlebars templates in JS files to be included.
+Then it combines all the source files into one file and copies it to the assets folder in the tsapp (tsbarapp folder).
+
 There is a version-controlled index.html file, main.js and style.css to kick-start a basic page.
 
-This server interacts with tiddlyspace.com so you can use it with real data.
+This server interacts with tiddlyspace.com so you can use it with real data or place tiddlers in the assets folder.
 
 Testing
 =======
 
-Just run `grunt jasmine`
+Just run `grunt handlebars jasmine`
 
-To run tests in a browser run `grunt jasmine-server`.
+To run tests in a browser run `grunt handlebars jasmine-server`.

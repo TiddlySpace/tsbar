@@ -14,7 +14,8 @@
     "author":"Osmosoft",
     "license":"BSD",
     "dependencies":{
-        "grunt-jasmine-runner":"0.5.x"
+        "grunt-jasmine-runner":"0.5.x",
+        "grunt-contrib-handlebars":"0.3.x"
     },
     "scripts": {
         "test": "grunt lint jasmine"

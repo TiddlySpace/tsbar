@@ -1,7 +1,9 @@
 /*global module:false*/
 module.exports = function (grunt) {
 
-    var srcFiles = ['src/search.js', 'src/user.js'];
+    var widgetFiles = ['src/search.js', 'src/user.js'];
+    var depFiles = ['test/lib/jquery.js', 'test/lib/handlebars.runtime-1.0.rc.1.js'];
+    var orderedHelpers = ['test/lib/jquery.mockjax.js', 'test/fixtures.js'];
 
     grunt.initConfig({
         pkg:'<json:package.json>',
@@ -16,7 +18,7 @@ module.exports = function (grunt) {
             files:['grunt.js', 'src/**/*.js']
         },
         jasmine: {
-            src:['test/lib/jquery.js', 'test/lib/jquery.mockjax.js', 'test/fixtures.js', 'src/tsbar.js', 'src/*.js'],
+            src:[depFiles, orderedHelpers, 'dist/templates/*.js', 'src/tsbar.js', widgetFiles],
             specs: 'test/*Spec.js',
             helpers: 'test/lib/jasmine-jquery-1.3.1.js',
             timeout: 10000,
@@ -24,13 +26,13 @@ module.exports = function (grunt) {
         },
         concat:{
             dist:{
-                src:['<banner:meta.banner>', '<file_strip_banner:src/<%= pkg.name %>.js>', srcFiles],
+                src:['<banner:meta.banner>', '<file_strip_banner:src/<%= pkg.name %>.js>', 'dist/templates/*.js', widgetFiles],
                 dest:'dist/<%= pkg.name %>-<%= pkg.version %>.js'
             }
         },
         min:{
             dist:{
-                src:['<banner:meta.banner>', '<config:concat.dist.dest>', srcFiles],
+                src:['<banner:meta.banner>', '<config:concat.dist.dest>', widgetFiles],
                 dest:'dist/<%= pkg.name %>-<%= pkg.version %>.min.js'
             }
         },
@@ -55,22 +57,31 @@ module.exports = function (grunt) {
             globals:{
                 $:true,
                 jQuery:true,
+                Handlebars:true,
                 tsbar:true,
                 tiddlyweb:true,
                 io:true,
                 console:true
             }
         },
-        uglify:{}
+        handlebars: {
+            compile: {
+                files: {
+                    "dist/templates/search-template.js": "src/templates/search.hbs"
+                }
+            }
+        }
     });
 
-    grunt.registerTask('default', 'lint jasmine concat min');
+    grunt.registerTask('default', 'lint handlebars jasmine concat min');
 
     grunt.registerTask('update-tsapp', 'copy tsbar file to the tsapp for testing.', function () {
 
-        this.requires('concat');
+        this.requires('handlebars', 'concat');
+        grunt.file.copy('test/lib/handlebars.runtime-1.0.rc.1.js', 'tsbarapp/assets/handlebars.js');
         grunt.file.copy('dist/tsbar-' + grunt.config('pkg.version') + '.js', 'tsbarapp/assets/tsbar.js');
     });
 
     grunt.loadNpmTasks('grunt-jasmine-runner');
+    grunt.loadNpmTasks('grunt-contrib-handlebars');
 };
