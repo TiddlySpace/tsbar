@@ -38,6 +38,6 @@ This server interacts with tiddlyspace.com so you can use it with real data or p
 Testing
 =======
 
-Just run `grunt handlebars jasmine`
+Just run `grunt test`
 
 To run tests in a browser run `grunt handlebars jasmine-server`.

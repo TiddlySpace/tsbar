@@ -74,6 +74,7 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('default', 'lint handlebars jasmine concat min');
+    grunt.registerTask('test', 'handlebars jasmine');
 
     grunt.registerTask('update-tsapp', 'copy tsbar file to the tsapp for testing.', function () {
 

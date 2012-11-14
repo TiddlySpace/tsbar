@@ -18,6 +18,6 @@
         "grunt-contrib-handlebars":"0.3.x"
     },
     "scripts": {
-        "test": "grunt lint jasmine"
+        "test": "grunt lint test"
     }
 }
