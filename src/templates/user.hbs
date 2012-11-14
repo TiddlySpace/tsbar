@@ -1,0 +1,56 @@
+<button class="tsbar-user-btn">
+    <img class="tsbar-user-icon">
+    <div class="tsbar-user-notification"></div>
+</button>
+<div class="tsbar-popup tsbar-user-widget">
+    <div class="tsbar-user-topbar">
+        <div id="tsbar-login-message" class="tsbar-logged-out">You are not logged in</div>
+        <div class="tsbar-logged-in">
+            <button class="tsbar-logout-btn">Log out</button>
+        </div>
+    </div>
+    <div class="tsbar-logged-out">
+        <form class="tsbar-login-classic">
+            <div class="tsbar-login-group">
+                <label>Username</label>
+                <input type="text" class="tsbar-login-username" name="username" autocorrect="off" autocapitalize="off">
+            </div>
+            <div class="tsbar-login-group">
+                <label>Password</label>
+                <input type="password" class="tsbar-login-password" name="username">
+            </div>
+            <div class="tsbar-login-footer">
+                <a href="#" class="tsbar-login-switch">use openid</a>
+                <input class="tsbar-login-btn" type="submit" value="Log in">
+            </div>
+        </form>
+        <form class="tsbar-login-openid">
+            <div class="tsbar-login-group">
+                <label>OpenID</label>
+                <input type="text" class="tsbar-login-id" name="username" autocorrect="off" autocapitalize="off">
+            </div>
+            <div class="tsbar-login-footer">
+                <a href="#" class="tsbar-login-switch">use username/password</a>
+                <input type="submit" value="Log in">
+            </div>
+        </form>
+    </div>
+    <div class="tsbar-logged-in">
+        <div class="tsbar-user-main">
+            <div class="tsbar-user-icon-container">
+                <img class="tsbar-user-icon">
+                <a href="#">Click to Edit</a>
+            </div>
+            <div class="tsbar-user-info">
+                <a href="#" class="tsbar-user-profile">View Profile</a>
+                <h2 class="tsbar-user-name"></h2>
+                <hr>
+            </div>
+        </div>
+        <div class="tsbar-user-notification">
+            <h2>Activity</h2>
+            <ul></ul>
+            <a href="#">See All</a>
+        </div>
+    </div>
+</div>

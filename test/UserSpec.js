@@ -44,7 +44,8 @@ describe('User Widget', function() {
         },
         getCSRFToken: function() {
             return 'asdfghjki765redscvbhjuytre4dety3uhwekdshfuybj';
-        }
+        },
+        tswidgets: window.tswidgets
     };
 
     beforeEach(function() {
