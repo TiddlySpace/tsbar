@@ -4,26 +4,12 @@
  */
 tsbar.initUserWidget = function (window, $) {
 
-    var $compiledTemplate = $(window.tswidgets.templates['user.hbs'](Handlebars));
-    var $button = $compiledTemplate.first();
-    var $popup = $compiledTemplate.last();
-    /*
-     * Define templates for the notification list
-     */
-    var notificationTemplates = {
-        following:[
-            '<li>',
-            '<img class="tsbar-notification-icon">',
-            '<p><a class="tsbar-notification-user"></a> ',
-            'started following you</p>',
-            '</li>'].join(''),
-        atTag:[
-            '<li>',
-            '<img class="tsbar-notification-icon">',
-            '<p><a class="tsbar-notification-user"></a> ',
-            'wrote <a class="tsbar-notification-at"></a> for you</p>',
-            '</li>'].join('')
-    };
+    var $userWidgetTemplate = $(window.tswidgets.templates['user.hbs'](Handlebars));
+    var $button = $userWidgetTemplate.first();
+    var $popup = $userWidgetTemplate.last();
+
+    var $followersNotificationTemplate = $(window.tswidgets.templates['followers.hbs'](Handlebars));
+    var $mentionsNotificationTemplate = $(window.tswidgets.templates['mentions.hbs'](Handlebars));
 
     function getSiteIcon(username) {
         if (username === 'GUEST') {
@@ -212,11 +198,11 @@ tsbar.initUserWidget = function (window, $) {
         render:function (tiddler) {
             var self = this;
 
-            var template = tiddler.tags && ~tiddler.tags.indexOf('@' + this.username) ?
-                notificationTemplates.atTag :
-                notificationTemplates.following;
+            var $template = tiddler.tags && ~tiddler.tags.indexOf('@' + this.username) ?
+                $mentionsNotificationTemplate :
+                $followersNotificationTemplate;
 
-            var $li = $(template).find('.tsbar-notification-icon')
+            var $li = $template.clone().find('.tsbar-notification-icon')
                 .attr('src', 'http://tiddlyspace.com/bags/' + tiddler.bag +
                 '/tiddlers/SiteIcon')
                 .end().find('.tsbar-notification-user')
