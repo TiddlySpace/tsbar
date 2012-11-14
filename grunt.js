@@ -18,7 +18,7 @@ module.exports = function (grunt) {
             files:['grunt.js', 'src/**/*.js']
         },
         jasmine: {
-            src:[depFiles, orderedHelpers, 'dist/templates/*.js', 'src/tsbar.js', widgetFiles],
+            src:[depFiles, orderedHelpers, 'dist/templates.js', 'src/tsbar.js', widgetFiles],
             specs: 'test/*Spec.js',
             helpers: 'test/lib/jasmine-jquery-1.3.1.js',
             timeout: 10000,
@@ -26,13 +26,13 @@ module.exports = function (grunt) {
         },
         concat:{
             dist:{
-                src:['<banner:meta.banner>', '<file_strip_banner:src/<%= pkg.name %>.js>', 'dist/templates/*.js', widgetFiles],
+                src:['<banner:meta.banner>', '<file_strip_banner:src/<%= pkg.name %>.js>', 'dist/templates.js', widgetFiles],
                 dest:'dist/<%= pkg.name %>-<%= pkg.version %>.js'
             }
         },
         min:{
             dist:{
-                src:['<banner:meta.banner>', '<config:concat.dist.dest>', widgetFiles],
+                src:['<banner:meta.banner>', '<config:concat.dist.dest>'],
                 dest:'dist/<%= pkg.name %>-<%= pkg.version %>.min.js'
             }
         },
@@ -75,7 +75,7 @@ module.exports = function (grunt) {
                     }
                 },
                 files: {
-                    "dist/templates/search-template.js": "src/templates/search.hbs"
+                    "dist/templates.js": "src/templates/*.hbs"
                 }
             }
         }
