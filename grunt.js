@@ -66,6 +66,14 @@ module.exports = function (grunt) {
         },
         handlebars: {
             compile: {
+                options: {
+                    namespace: 'tswidgets.templates',
+                    processName: function(filePath) {
+
+                        var pieces = filePath.split("/");
+                        return pieces[pieces.length - 1];
+                    }
+                },
                 files: {
                     "dist/templates/search-template.js": "src/templates/search.hbs"
                 }

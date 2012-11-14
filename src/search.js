@@ -6,7 +6,7 @@ tsbar.initSearchWidget = function(exports, $) {
 
     function SearchWidget() {
 
-        this.$compiledTemplate = $(exports.JST["src/templates/search.hbs"](Handlebars));
+        this.$compiledTemplate = $(exports.tswidgets.templates['search.hbs'](Handlebars));
         //TODO: this is a hack as the pre-compiled templates have carriage returns which confuses jquery
         this.$el = $(this.$compiledTemplate[0]);
         this.$popup = $(this.$compiledTemplate[2]);
