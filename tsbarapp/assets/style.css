@@ -2,8 +2,16 @@
     font-family: "Helvetica Neue", "Lucida Grande", "Helvetica", "Verdana", "Arial", "sans-serif";
 }
 
-.tsbar-popup {
+h2.tsbar {
+    margin: 0;
+}
+
+.tsbar-popup, .tsbar-user-icon-container p {
     display: none;
+}
+
+.tsbar-user-icon:hover + p {
+    display: block;
 }
 
 .open .tsbar-popup {
@@ -55,10 +63,22 @@
     background: #f5f5f5;
 }
 
-.tsbar-user-widget {
+.tsbar-user-widget, hr.tsbar {
     clear: both;
 }
 
-.tsbar-user-btn {
+.tsbar-user-btn, .tsbar-user-info, .tsbar-logout-btn {
     float: right;
+}
+
+.tsbar-logout-btn {
+    margin-bottom: 0.9em;
+}
+
+.tsbar-user-icon-container {
+    display: inline-block;
+}
+
+.tsbar-user-info {
+    display: inline;
 }

@@ -5,9 +5,6 @@
 <div class="tsbar-popup tsbar-user-widget">
     <div class="tsbar-user-topbar">
         <div id="tsbar-login-message" class="tsbar-logged-out">You are not logged in</div>
-        <div class="tsbar-logged-in">
-            <button class="tsbar-logout-btn">Log out</button>
-        </div>
     </div>
     <div class="tsbar-logged-out">
         <form class="tsbar-login-classic">
@@ -37,14 +34,20 @@
     </div>
     <div class="tsbar-logged-in">
         <div class="tsbar-user-main">
-            <div class="tsbar-user-icon-container">
+            <span class="tsbar-user-icon-container">
                 <img class="tsbar-user-icon">
-                <a href="#">Click to Edit</a>
-            </div>
-            <div class="tsbar-user-info">
-                <a href="#" class="tsbar-user-profile">View Profile</a>
-                <h2 class="tsbar-user-name"></h2>
-                <hr>
+                <p>Click to Edit</p>
+            </span>
+            <table class="tsbar-user-info">
+                <tbody>
+                    <tr><td><h2 class="tsbar tsbar-user-name"></h2></td></tr>
+                    <tr><td><a href="#" class="tsbar-user-profile">View Profile</a></td></tr>
+                </tbody>
+            </table>
+            <hr class="tsbar">
+            <div class="tsbar-logged-in">
+                <button class="tsbar-logout-btn">Log out</button>
+                <hr class="tsbar">
             </div>
         </div>
         <div class="tsbar-user-notification">
