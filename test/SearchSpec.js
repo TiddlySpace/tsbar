@@ -4,9 +4,7 @@ describe('Search Widget', function() {
 
     function performSearch() {
 
-        searchWidget.find('.tsbar-widget button').click();
-        searchWidget.find("input[type='text']").val('test');
-        searchWidget.find("input[value='Find']").click();
+        searchWidget.find("input[type='text']").focus().val('test').trigger("input");
     }
     
     beforeEach(function () {
@@ -28,24 +26,14 @@ describe('Search Widget', function() {
             expect(searchWidget.find("input[type='text']").length).toEqual(1);
         });
 
-        it('should contain a find button', function() {
-
-            expect(searchWidget.find("input[value='Find']").length).toEqual(1);
-        });
-
         it('should contain a clear button', function() {
 
-            expect(searchWidget.find("input[value='Clear']").length).toEqual(1);
-        });
-
-        it('should contain a div area for search results', function() {
-
-            expect(searchWidget.find("div:not('.tsbar-popup')").length).toEqual(1);
+            expect(searchWidget.find("button.clear").length).toEqual(1);
         });
 
     });
 
-    describe('Performing searches', function() {
+    describe('interacting with search widget', function() {
 
         beforeEach(function () {
 
@@ -58,29 +46,36 @@ describe('Search Widget', function() {
         it('should render search results then clear the search results area and search query text', function() {
 
             runs(function() {
-
                 performSearch();
             });
 
             waitsFor(function () {
+                return searchWidget.find("form").hasClass("inuse");
+            }, 'the search form to have the inuse class', 200);
 
-                return searchWidget.find("div:not('.tsbar-popup')").html() ===
-                '<div id="container"><div>some search results</div></div>';
-
-            }, 'the search results to appear after the search button was clicked', 500);
+			waitsFor(function() {
+				return searchWidget.find("button.clear").is(":visible");
+			}, 'clear button should appear now text has been entered', 200);
 
             runs(function() {
-
-                searchWidget.find("input[value='Clear']").trigger('click');
+				searchWidget.find("button.clear").trigger('click');
             });
 
             waitsFor(function() {
-                return searchWidget.find("div:not('.tsbar-popup'):empty").length === 1;
-            }, 'the search results to clear after the clear button was clicked', 500);
+                return searchWidget.find("input[type='text']").val() === '';
+            }, 'the search box to clear after the clear button was clicked', 200);
 
             waitsFor(function() {
-                return searchWidget.find("input[type='text']").val() === '';
-            }, 'the query text to clear after the clear button was clicked', 500);
+                return searchWidget.find("button.clear").is(":hidden");
+            }, 'the clear button to be invisble now search query removed', 200);
+
+			runs(function() {
+				searchWidget.find("input[type='text']").blur();
+			});
+			
+			waitsFor(function() {
+				return !searchWidget.find("form").hasClass("inuse");
+			}, 'the inuse class to be removed from the form', 200);
         });
     });
 });
