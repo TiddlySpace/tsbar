@@ -1,8 +1,4 @@
-<button class="tsbar-search-btn">Search</button>
-<div class="tsbar-popup tsbar-search-widget">
-    <span>Search:</span>
-    <input id="tsbar-query-text" type="text" name="query"/>
-    <input id="tsbar-search-button" type="submit" value="Find"/>
-    <input id="tsbar-clear-button" type="submit" value="Clear"/>
-    <div id="tsbar-search-results"></div>
-</div>
+<form method="get" action="/hsearch" id="search" class="tsbar-search-widget">
+	<input id="tsbar-query-text" name="q" type="text" placeholder="Search..." />
+	<button id="tsbar-clear-button" class="clear" title="clear search box">&times;</button>
+</form>
