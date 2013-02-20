@@ -1,6 +1,3 @@
-/*jshint
-  expr: true
-*/
 /*
  * Provide a search widget with a popup to enter and clear search terms.
  * Test suite can get a handle on this for clean slate testing.
@@ -28,8 +25,7 @@ tsbar.initSearchWidget = function(exports, $) {
 	SearchWidget.prototype._toggleInuse = function(e) {
 		var len = $(this).val().length,
 			$form = $(this).parent("form");
-		(len && len > 0) ?
-			$form.addClass("inuse") : $form.removeClass("inuse");
+		$form.toggleClass("inuse", len && len > 0);
 	};
 
     SearchWidget.prototype._doClear = function(e) {
