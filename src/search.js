@@ -51,6 +51,7 @@ tsbar.initSearchWidget = function(exports, $) {
 };
 
 (function(exports, $) {
+	"use strict";
 
     tsbar.initSearchWidget(exports, $);
 
