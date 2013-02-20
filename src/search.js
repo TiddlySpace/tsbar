@@ -1,3 +1,6 @@
+/*jshint
+  expr: true
+*/
 /*
  * Provide a search widget with a popup to enter and clear search terms.
  * Test suite can get a handle on this for clean slate testing.
