@@ -89,6 +89,9 @@ module.exports = function (grunt) {
         this.requires('handlebars', 'concat');
         grunt.file.copy('test/lib/handlebars.runtime-1.0.rc.1.js', 'tsbarapp/assets/handlebars.js');
         grunt.file.copy('dist/tsbar-' + grunt.config('pkg.version') + '.js', 'tsbarapp/assets/tsbar.js');
+		grunt.file.recurse('src/css', function(abspath, rootdir, subdir, filename) {
+			grunt.file.copy('src/css/'+filename, 'tsbarapp/assets/'+filename);
+		});
     });
 
     grunt.loadNpmTasks('grunt-jasmine-runner');

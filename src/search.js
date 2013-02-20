@@ -5,14 +5,11 @@
 tsbar.initSearchWidget = function(exports, $) {
 
     function SearchWidget() {
-
         this.$compiledTemplate = $(exports.tswidgets.templates['search.hbs'](Handlebars));
         this.$el = this.$compiledTemplate.first();
-        this.$popup = this.$compiledTemplate.last();
 
         this._widget = tsbar.Widget({
-            el: this.$el,
-            popup: this.$popup
+            el: this.$el
         });
     }
 
@@ -21,18 +18,26 @@ tsbar.initSearchWidget = function(exports, $) {
     };
 
     SearchWidget.prototype._registerListeners = function() {
-        this.$popup.find('#tsbar-search-button').click(this._doSearch);
-        this.$popup.find('#tsbar-clear-button').click(this._doClear);
+        this.$el.find('#tsbar-query-text').on("input", this._toggleInuse);
+        this.$el.find('#tsbar-clear-button').on("click", {self: this}, this._doClear);
     };
 
-    SearchWidget.prototype._doSearch = function() {
-        var query = $('#tsbar-query-text').val();
-        $('#tsbar-search-results').load('/hsearch?q=' + query + ' #container');
-    };
+	SearchWidget.prototype._toggleInuse = function(e) {
+		var len = $(this).val().length,
+			$form = $(this).parent("form");
+		(len && len > 0) ?
+			$form.addClass("inuse") : $form.removeClass("inuse");
+	};
 
-    SearchWidget.prototype._doClear = function() {
-        $('#tsbar-search-results').html('');
-        $('#tsbar-query-text').val('');
+    SearchWidget.prototype._doClear = function(e) {
+		var self = e.data.self;
+		e.preventDefault();
+		self.$el
+			.find("#tsbar-query-text")
+				.val("")
+				.focus()
+			.end()
+			.removeClass("inuse");
     };
 
     function main() {
