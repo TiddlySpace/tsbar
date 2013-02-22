@@ -1,7 +1,7 @@
 /*global module:false*/
 module.exports = function (grunt) {
 
-    var widgetFiles = ['src/search.js', 'src/user.js'];
+    var widgetFiles = ['src/search.js', 'src/user.js', 'src/tslinks.js'];
     var depFiles = ['test/lib/jquery.js', 'test/lib/handlebars.runtime-1.0.rc.1.js'];
     var orderedHelpers = ['test/lib/jquery.mockjax.js', 'test/fixtures.js'];
 
