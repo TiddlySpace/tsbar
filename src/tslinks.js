@@ -7,6 +7,12 @@ tsbar.initTSLinksWidget = function(exports, $) {
 		$button = $linksWidgetTemplate.first(),
 		$popup = $linksWidgetTemplate.last();
 
+	// sets class on widget given logged in status
+	function setAuthClass(username) {
+		var state = (username === "GUEST") ? "loggedOut" : "loggedIn";
+		this.addClass(state);
+	}
+
 	/*
      * Create the widget and register it
      */
@@ -15,6 +21,13 @@ tsbar.initTSLinksWidget = function(exports, $) {
 			el:$button,
 			popup:$popup
 		});
+
+		// add required functions
+		$.extend(tsbar.tsLinksWidget, {
+			setAuthClass: setAuthClass
+		});
+
+		tsbar.tsLinksWidget.setAuthClass(tiddlyweb.status.username);
     }
 
     main();
@@ -23,6 +36,6 @@ tsbar.initTSLinksWidget = function(exports, $) {
 (function(exports, $) {
 	"use strict";
 
-    //tsbar.initTSLinksWidget(exports, $);
+    tsbar.initTSLinksWidget(exports, $);
 
 }(window, jQuery));

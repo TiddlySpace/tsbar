@@ -34,6 +34,25 @@ describe('TS Links Widget', function() {
 			expect(tsLinksWidget.find(".tsbar-links-widget").length).toEqual(1);
 			expect(tsLinksWidget.find(".tsbar-links-widget iframe").length).toEqual(1);
 		});
+
+		it('should set the right class on itself given the status', function() {
+			var username;
+			runs(function() {
+				username = "GUEST";
+				tsLinksWidget.setAuthClass(username);
+			});
+			waitsFor(function() {
+				return tsLinksWidget.hasClass("loggedOut");
+			}, 'the loggedOut class to be set', 100);
+
+			runs(function() {
+				username = "colmbritton";
+				tsLinksWidget.setAuthClass(username);
+			});
+			waitsFor(function() {
+				return tsLinksWidget.hasClass("loggedIn");
+			}, 'the loggedIn class to be set', 100);
+		});
 	});
 
 });
