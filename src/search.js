@@ -18,8 +18,11 @@ tsbar.initSearchWidget = function(exports, $) {
     };
 
     SearchWidget.prototype._registerListeners = function() {
+		var self = this;
         this.$el.find('#tsbar-query-text').on("input", this._toggleInuse);
-        this.$el.find('#tsbar-clear-button').on("click", {self: this}, this._doClear);
+        this.$el.find('#tsbar-clear-button').on("click", function(e) {
+			self._doClear.call(self, e);
+		});
     };
 
 	SearchWidget.prototype._toggleInuse = function(e) {
@@ -29,9 +32,8 @@ tsbar.initSearchWidget = function(exports, $) {
 	};
 
     SearchWidget.prototype._doClear = function(e) {
-		var self = e.data.self;
 		e.preventDefault();
-		self.$el
+		this.$el
 			.find("#tsbar-query-text")
 				.val("")
 				.focus()
