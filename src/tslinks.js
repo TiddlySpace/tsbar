@@ -14,6 +14,17 @@ tsbar.initTSLinksWidget = function(exports, $) {
 	}
 
 	/*
+     * Get user details from status.js (or server)
+     */
+	function getUserDetails(callback) {
+		if (window.tiddlyweb && tiddlyweb.status) {
+			callback(tiddlyweb.status);
+		} else {
+			$.getJSON('/status.js', callback);
+		}
+	}
+
+	/*
      * Create the widget and register it
      */
     function main() {
@@ -27,7 +38,9 @@ tsbar.initTSLinksWidget = function(exports, $) {
 			setAuthClass: setAuthClass
 		});
 
-		tsbar.tsLinksWidget.setAuthClass(tiddlyweb.status.username);
+		getUserDetails(function(resp) {
+			tsbar.tsLinksWidget.setAuthClass(resp.status.username);
+		});
     }
 
     main();
