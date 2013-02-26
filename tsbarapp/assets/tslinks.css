@@ -1,0 +1,13 @@
+#ts-standard-links,
+#ts-member-links {
+	display: none;
+}
+
+.loggedOut #ts-standard-links,
+.loggedIn #ts-member-links {
+	display: block;
+}
+
+section ul {
+	border-bottom: 1px dashed grey;
+}
