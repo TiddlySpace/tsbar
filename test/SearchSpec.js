@@ -51,7 +51,7 @@ describe('Search Widget', function() {
 
             waitsFor(function () {
                 return searchWidget.find("form").hasClass("inuse");
-            }, 'the search form to have the inuse class', 200);
+            }, 'the search form to have the in-use class', 200);
 
 			waitsFor(function() {
 				return searchWidget.find("button.clear").is(":visible");
@@ -67,7 +67,7 @@ describe('Search Widget', function() {
 
             waitsFor(function() {
                 return searchWidget.find("button.clear").is(":hidden");
-            }, 'the clear button to be invisble now search query removed', 200);
+            }, 'the clear button to be invisible now search query removed', 200);
 
 			runs(function() {
 				searchWidget.find("input[type='text']").blur();
@@ -75,7 +75,7 @@ describe('Search Widget', function() {
 			
 			waitsFor(function() {
 				return !searchWidget.find("form").hasClass("inuse");
-			}, 'the inuse class to be removed from the form', 200);
+			}, 'the in-use class to be removed from the form', 200);
         });
     });
 });
