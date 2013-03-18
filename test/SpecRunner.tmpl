@@ -5,13 +5,13 @@
     <title>Jasmine Spec Runner</title>
 
     <% css.forEach(function(style){ %>
-    <link rel="stylesheet" type="text/css" href="<%= style %>">
+      <link rel="stylesheet" type="text/css" href="<%= style %>">
     <% }) %>
-	<link rel="stylesheet" type="text/css" href="src/css/search.css">
-
-    <% scripts.forEach(function(script){ %>
-    <script type="text/javascript" src="<%= script %>"></script>
-    <% }) %>
+    <% with (scripts) { %>
+      <% [].concat(jasmine, vendor, helpers, src, specs, reporters, start).forEach(function(script){ %>
+      <script src="<%= script %>"></script>
+      <% }) %>
+    <% }; %>
 </head>
 
 <body>

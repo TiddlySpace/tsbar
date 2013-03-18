@@ -1,23 +1,29 @@
 {
-    "name":"tsbar",
-    "version":"0.0.1",
-    "description":"A toolbar for Tiddlyspace that can be re-used in Tiddly SPAs",
-    "main":"grunt.js",
-    "repository":{
-        "type":"git",
-        "url":"git://github.com/TiddlySpace/tsbar.git"
-    },
-    "keywords":[
-        "Tiddlyspace",
-        "tsbar"
-    ],
-    "author":"Osmosoft",
-    "license":"BSD",
-    "dependencies":{
-        "grunt-jasmine-runner":"0.5.x",
-        "grunt-contrib-handlebars":"0.3.x"
-    },
-    "scripts": {
-        "test": "grunt lint test"
-    }
+  "name": "tsbar",
+  "version": "0.0.1",
+  "description": "A toolbar for Tiddlyspace that can be re-used in Tiddly SPAs",
+  "main": "Gruntfile.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/TiddlySpace/tsbar.git"
+  },
+  "keywords": [
+    "Tiddlyspace",
+    "tsbar"
+  ],
+  "author": "Osmosoft",
+  "license": "BSD",
+  "scripts": {
+    "test": "grunt jshint test"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.0",
+    "grunt-contrib-concat": "~0.1.3",
+    "grunt-contrib-watch": "~0.3.1",
+    "grunt-contrib-connect": "~0.2.0",
+    "grunt-contrib-jshint": "~0.3.0",
+    "grunt-contrib-jasmine": "~0.4.1",
+    "grunt-contrib-handlebars": "~0.5.8",
+    "grunt-contrib-uglify": "~0.2.0"
+  }
 }

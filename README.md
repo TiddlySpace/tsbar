@@ -12,7 +12,7 @@ Development Setup
 For developing the TiddlySpace Bar you will need:
 
 * [node](nodejs.org)
-* [grunt](http://gruntjs.com/)
+* [grunt](http://gruntjs.com/) - `npm install -g grunt-cli`
 * phantomjs  - `npm install -g phantomjs`
 
 Run `npm install` for first time use as well, this will fetch the required node modules that will help development.
@@ -38,6 +38,14 @@ This server interacts with tiddlyspace.com so you can use it with real data or p
 Testing
 =======
 
-Just run `grunt test`
+Just run `grunt test` and watch the results in the terminal.
 
-To run tests in a browser run `grunt handlebars jasmine-server`.
+To run tests on-the-fly run:
+
+    grunt tdd-mode
+
+This watches source and test files for changes and runs all the tests
+on a local server each time files are saved.  To run the tests in your own browser (keeping the tdd-mode task running),
+open:
+
+    http://localhost:8000/_SpecRunner.html
