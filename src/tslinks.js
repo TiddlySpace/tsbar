@@ -38,8 +38,8 @@ tsbar.initTSLinksWidget = function(exports, $) {
 			setAuthClass: setAuthClass
 		});
 
-		getUserDetails(function(resp) {
-			tsbar.tsLinksWidget.setAuthClass(resp.status.username);
+		getUserDetails(function(response) {
+			tsbar.tsLinksWidget.setAuthClass(response.username);
 		});
     }
 
