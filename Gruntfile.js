@@ -93,6 +93,16 @@ module.exports = function (grunt) {
                     "dist/templates.js": "src/templates/*.hbs"
                 }
             }
+        },
+        exec: {
+            tsserve: {
+                command: "cd tsbarapp && tsapp serve",
+                stdout: true
+            },
+            tspush: {
+                command: "cd tsbarapp && tsapp push tsbar_public",
+                stdout: true
+            }
         }
     });
 
@@ -112,6 +122,16 @@ module.exports = function (grunt) {
 		});
     });
 
+    grunt.registerTask('ts-deploy', 'Deploy the application to TiddlySpace', function () {
+
+        grunt.task.run(['test', 'concat', 'update-tsapp', 'exec:tspush']);
+    });
+
+    grunt.registerTask('ts-serve', 'Host the application locally via tsapp', function () {
+
+        grunt.task.run('exec:tsserve');
+    });
+
     grunt.loadNpmTasks('grunt-contrib-jasmine');
     grunt.loadNpmTasks('grunt-contrib-handlebars');
     grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -119,4 +139,5 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks("grunt-exec");
 };
