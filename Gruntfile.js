@@ -1,7 +1,7 @@
 /*global module: false*/
 module.exports = function (grunt) {
 
-    var widgetFiles = ['src/search.js', 'src/user.js', 'src/tslinks.js'];
+    var widgetFiles = ['src/js/search.js', 'src/js/user.js', 'src/js/tslinks.js'];
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -14,12 +14,12 @@ module.exports = function (grunt) {
         },
         jasmine: {
             test: {
-                src: ['dist/templates.js', 'src/tsbar.js', widgetFiles],
+                src: ['dist/templates.js', 'src/js/tsbar.js', widgetFiles],
                 options: {
                     specs: 'test/*Spec.js',
                     helpers: ['test/lib/jquery.mockjax.js', 'test/fixtures.js', 'test/lib/jasmine-jquery-1.3.1.js'],
                     vendor: ['test/lib/jquery.js', 'test/lib/handlebars.runtime-1.0.rc.1.js'],
-                    styles: ['src/css/search.css'],
+                    styles: ['src/css/*.css'],
                     timeout: 10000,
                     template: 'test/SpecRunner.tmpl',
                     host : 'http://127.0.0.1:8000/'
@@ -28,7 +28,7 @@ module.exports = function (grunt) {
         },
         concat: {
             dist: {
-                src: ['src/tsbar.js', 'dist/templates.js', widgetFiles],
+                src: ['src/js/tsbar.js', 'dist/templates.js', widgetFiles],
                 dest: 'dist/<%= pkg.name %>-<%= pkg.version %>.js',
                 options: {
                     banner: '<%= meta.banner %>'
@@ -77,7 +77,7 @@ module.exports = function (grunt) {
                     console: true
                 }
             },
-            files: ['Gruntfile.js', 'src/**/*.js']
+            files: ['Gruntfile.js', 'src/js/*.js']
         },
         handlebars: {
             compile: {
@@ -124,7 +124,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('ts-deploy', 'Deploy the application to TiddlySpace', function () {
 
-        grunt.task.run(['test', 'concat', 'update-tsapp', 'exec:tspush']);
+        grunt.task.run(['jshint', 'test', 'concat', 'update-tsapp', 'exec:tspush']);
     });
 
     grunt.registerTask('ts-serve', 'Host the application locally via tsapp', function () {
