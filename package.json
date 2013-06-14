@@ -12,7 +12,10 @@
     "tsbar"
   ],
   "author": "Osmosoft",
-  "license": "BSD",
+  "licenses" : [{
+    "type" : "BSD New",
+    "url" : "http://github.com/tiddlyspace/tsbar/LICENSE"
+  }],
   "scripts": {
     "test": "grunt jshint test"
   },
