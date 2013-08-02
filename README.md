@@ -1,51 +1,51 @@
 [![Build Status](https://travis-ci.org/TiddlySpace/tsbar.png)](https://travis-ci.org/TiddlySpace/tsbar)
 
-TiddlySpace Bar
-===============
+# TiddlySpace Bar
 
 A toolbar for [TiddlySpace](http://tiddlyspace.com).
 Designed to replace the backstage area and provide a more consistent environment across the whole of TiddlySpace.
 
-Development Setup
-=================
+# Change Log
 
-For developing the TiddlySpace Bar you will need:
+* v0.1.0: First release - simply a stub that can be loaded into pages amongst TiddlySpace.
 
-* [node](nodejs.org) - requires version 0.8+
-* [grunt](http://gruntjs.com/) - `npm install -g grunt-cli`
-* phantomjs  - `npm install -g phantomjs`
+# Contributing
 
-Run `npm install` for first time use as well, this will fetch the required node modules that will help development.
+## Requirements
 
-Run `grunt` by itself to run all the required tasks to build and deploy the bar.
+* [node](http://nodejs.org/)
+* [grunt](http://gruntjs.com/)
+* [tsapp](http://tsapp.tiddlyspace.com/) - optional, for testing out the tsbar in a local TiddlySpace environment.
 
-Hosting the Bar
-===============
+## First Time Setup
 
-There is an example application used to host the bar that makes use of [tsapp](https://github.com/cdent/tsapp).
-You will need to [install](https://github.com/cdent/tsapp#install) tsapp then run: `tsapp auth` to authenticate.
+Install the project dependencies then run the grunt default task.
 
-Run `tsapp serve` to run the app.
+```
+npm install
+grunt
+```
 
-To keep it up-to-date run `grunt handlebars concat update-tsapp`.
-This compiles handlebars templates in JS files to be included.
-Then it combines all the source files into one file and copies it to the assets folder in the tsapp (tsbarapp folder).
+This task:
 
-There is a version-controlled index.html file, main.js and style.css to kick-start a basic page.
+* Cleans the `dist` directory.
+* Lints the JS files.
+* Concatonates and minifies the JS code for distribution.
+* Copies the contents of the `dist` folder into the `assets` folder to run in a TiddlySpace app.
 
-This server interacts with tiddlyspace.com so you can use it with real data or place tiddlers in the assets folder.
+### Releasing
 
-Testing
-=======
+Bump the version in `package.json` and run `grunt`.
+Add an entry to the Change Log section above.
+Commit the changes in the dist folder with a suitable commit message.
 
-Just run `grunt test` and watch the results in the terminal.
+## Example Inclusion
 
-To run tests on-the-fly run:
+To view how the bar is included in a page, run the following commands:
 
-    grunt tdd-mode
+```
+grunt
+tsapp serve
+```
 
-This watches source and test files for changes and runs all the tests
-on a local server each time files are saved.  To run the tests in your own browser (keeping the tdd-mode task running),
-open:
-
-    http://localhost:8000/_SpecRunner.html
+Open `http://localhost:8080/index.html` in your browser.

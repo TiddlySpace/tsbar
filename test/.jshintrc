@@ -1,0 +1,26 @@
+{
+    "curly": true,
+    "eqeqeq": true,
+    "immed": true,
+    "latedef": true,
+    "newcap": true,
+    "noarg": true,
+    "sub": true,
+    "undef": true,
+    "unused": true,
+    "boss": true,
+    "eqnull": true,
+    "browser": true,
+    "predef": [
+        "sinon",
+        "jasmine",
+        "loadFixtures",
+        "describe",
+        "xdescribe",
+        "beforeEach",
+        "afterEach",
+        "it",
+        "xit",
+        "expect"
+    ]
+}

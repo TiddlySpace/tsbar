@@ -1,143 +1,72 @@
-/*global module: false*/
+/* global module:false, require:false */
 module.exports = function (grunt) {
 
-    var widgetFiles = ['src/js/search.js', 'src/js/user.js', 'src/js/tslinks.js'];
-
     grunt.initConfig({
+
         pkg: grunt.file.readJSON('package.json'),
-        meta: {
-            banner: '/*\n * <%= pkg.title || pkg.name %> - v<%= pkg.version %> - ' +
-                '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
-                '<%= pkg.homepage ? "* " + pkg.homepage + "" : "" %>' +
-                ' * Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author%>;' +
-                ' Licensed <%= pkg.license %>\n */\n'
-        },
-        jasmine: {
-            test: {
-                src: ['dist/templates.js', 'src/js/tsbar.js', widgetFiles],
-                options: {
-                    specs: 'test/*Spec.js',
-                    helpers: ['test/lib/jquery.mockjax.js', 'test/fixtures.js', 'test/lib/jasmine-jquery-1.3.1.js'],
-                    vendor: ['test/lib/jquery.js', 'test/lib/handlebars.runtime-1.0.rc.1.js'],
-                    styles: ['src/css/*.css'],
-                    timeout: 10000,
-                    template: 'test/SpecRunner.tmpl',
-                    host : 'http://127.0.0.1:8000/'
-                }
-            }
-        },
+        banner: '/*\n * <%= pkg.name %> - v<%= pkg.version %> - ' +
+            '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
+            '<%= pkg.homepage ? " * " + pkg.homepage + "\\n" : "" %>' +
+            ' * Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
+            ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> \n */\n',
         concat: {
-            dist: {
-                src: ['src/js/tsbar.js', 'dist/templates.js', widgetFiles],
-                dest: 'dist/<%= pkg.name %>-<%= pkg.version %>.js',
+            js: {
                 options: {
-                    banner: '<%= meta.banner %>'
-                }
+                    banner: '<%= banner %>'
+                },
+                src: ['src/js/*.js'],
+                dest: 'dist/<%= pkg.name %>.js'
+            },
+            tid: {
+                src: ['src/tsbar.meta', '<%= concat.js.dest %>'],
+                dest: 'dist/<%= pkg.name %>.js.tid'
+            },
+            mintid: {
+                src: ['src/tsbar.meta', '<%= uglify.js.dest %>'],
+                dest: 'dist/<%= pkg.name %>.min.js.tid'
             }
         },
         uglify: {
-            dist: {
-                files: {
-                    'dist/<%= pkg.name %>-<%= pkg.version %>.min.js': ['<%= concat.dist.dest %>']
-                },
-                options: {
-                    banner: '<%= meta.banner %>'
-                }
-            }
-        },
-        connect: {
-            uses_defaults: {}
-        },
-        watch: {
-            test: {
-                files: ['test/fixtures.js', '<%= jshint.files %>', '<%= jasmine.test.options.specs %>'],
-                tasks: ['jshint', 'handlebars', 'jasmine']
+            options: {
+                banner: '<%= banner %>'
+            },
+            js: {
+                src: '<%= concat.js.dest %>',
+                dest: 'dist/<%= pkg.name %>.min.js'
             }
         },
         jshint: {
-            options: {
-                curly: true,
-                eqeqeq: true,
-                immed: true,
-                latedef: true,
-                newcap: true,
-                noarg: true,
-                sub: true,
-                undef: true,
-                boss: true,
-                eqnull: true,
-                browser: true,
-                globals: {
-                    $: true,
-                    jQuery: true,
-                    Handlebars: true,
-                    tsbar: true,
-                    tiddlyweb: true,
-                    io: true,
-                    console: true
-                }
-            },
-            files: ['Gruntfile.js', 'src/js/*.js']
-        },
-        handlebars: {
-            compile: {
+            gruntfile: {
                 options: {
-                    namespace: 'tswidgets.templates',
-                    processName: function(filePath) {
-
-                        var pieces = filePath.split("/");
-                        return pieces[pieces.length - 1];
-                    }
+                    jshintrc: '.jshintrc'
                 },
-                files: {
-                    "dist/templates.js": "src/templates/*.hbs"
-                }
+                src: 'Gruntfile.js'
+            },
+            src: {
+                options: {
+                    jshintrc: 'src/js/.jshintrc'
+                },
+                src: ['src/js/*.js']
             }
         },
-        exec: {
-            tsserve: {
-                command: "cd tsbarapp && tsapp serve",
-                stdout: true
-            },
-            tspush: {
-                command: "cd tsbarapp && tsapp push tsbar_public",
-                stdout: true
+        clean: {
+            files: ['dist']
+        },
+        copy: {
+            tsapp: {
+                files: [
+                    { expand: true, flatten: true, src: ['dist/*.js'], dest: 'assets/', filter: 'isFile' }
+                ]
             }
         }
     });
 
-    grunt.registerTask('default', ['jshint', 'test', 'concat', 'uglify']);
-    grunt.registerTask('test', ['handlebars', 'connect', 'jasmine']);
-    grunt.registerTask('tdd-mode', 'watch files and run tests as you go', ['connect', 'jasmine:test:build', 'watch']);
+    require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
+    /*
+     * Concatenate the JS together, then prepend the tiddler meta data.
+     * Then compress and prepend the tiddler meta data to the compressed version as well.
+     */
+    grunt.registerTask('build', ['concat:js', 'concat:tid', 'uglify', 'concat:mintid']);
 
-    grunt.registerTask('update-tsapp', 'copy tsbar file to the tsapp for testing.', function () {
-
-        this.requires('handlebars', 'concat');
-        grunt.file.copy('test/lib/handlebars.runtime-1.0.rc.1.js', 'tsbarapp/assets/handlebars.js');
-        grunt.file.copy('dist/tsbar-' + grunt.config('pkg.version') + '.js', 'tsbarapp/assets/tsbar.js');
-
-		grunt.file.recurse('src/css', function(abspath, rootdir, subdir, filename) {
-
-			grunt.file.copy('src/css/' + filename, 'tsbarapp/assets/' + filename);
-		});
-    });
-
-    grunt.registerTask('ts-deploy', 'Deploy the application to TiddlySpace', function () {
-
-        grunt.task.run(['jshint', 'test', 'concat', 'update-tsapp', 'exec:tspush']);
-    });
-
-    grunt.registerTask('ts-serve', 'Host the application locally via tsapp', function () {
-
-        grunt.task.run('exec:tsserve');
-    });
-
-    grunt.loadNpmTasks('grunt-contrib-jasmine');
-    grunt.loadNpmTasks('grunt-contrib-handlebars');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-connect');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks("grunt-exec");
+    grunt.registerTask('default', ['clean', 'jshint', 'build', 'copy']);
 };

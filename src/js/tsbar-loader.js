@@ -1,11 +1,3 @@
-type: text/javascript
-tags: excludeLists excludeSearch
-_cache-max-age: 43200
-/*
- * tsbar - v0.1.0 - 2013-08-02
- * https://github.com/tiddlyspace/tsbar
- * Copyright (c) 2013 Osmosoft; Licensed BSD New 
- */
 /**
  A stub to get the tsbar into TiddlySpace as a tiddler.
  The common recipe in TiddlySpace refers to this file.

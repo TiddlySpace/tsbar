@@ -1,6 +1,3 @@
-type: text/javascript
-tags: excludeLists excludeSearch
-_cache-max-age: 43200
 /*
  * tsbar - v0.1.0 - 2013-08-02
  * https://github.com/tiddlyspace/tsbar

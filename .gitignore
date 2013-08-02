@@ -1,4 +1,6 @@
-*.swp
+assets/tsbar.js
+assets/tsbar.min.js
+
 node_modules
-dist
+
 _SpecRunner.html
