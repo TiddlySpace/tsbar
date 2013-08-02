@@ -68,5 +68,7 @@ module.exports = function (grunt) {
      */
     grunt.registerTask('build', ['concat:js', 'concat:tid', 'uglify', 'concat:mintid']);
 
+    //TODO: replace this with real tests later
+    grunt.registerTask('test', ['default']);
     grunt.registerTask('default', ['clean', 'jshint', 'build', 'copy']);
 };
