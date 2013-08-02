@@ -14,7 +14,8 @@ Designed to replace the backstage area and provide a more consistent environment
 ## Requirements
 
 * [node](http://nodejs.org/)
-* [grunt](http://gruntjs.com/)
+* [grunt](http://gruntjs.com/) - `npm install -g grunt`
+* bower - `npm install -g bower`
 * [tsapp](http://tsapp.tiddlyspace.com/) - optional, for testing out the tsbar in a local TiddlySpace environment.
 
 ## First Time Setup
@@ -29,7 +30,9 @@ grunt
 This task:
 
 * Cleans the `dist` directory.
+* Install tsbar code dependencies.
 * Lints the JS files.
+* Compile handelbar HTML templates into a single JS file.
 * Concatonates and minifies the JS code for distribution.
 * Copies the contents of the `dist` folder into the `assets` folder to run in a TiddlySpace app.
 
