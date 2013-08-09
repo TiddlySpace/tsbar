@@ -3,7 +3,7 @@ tags: excludeLists excludeSearch
 _cache-max-age: 43200
 
 /*
- * tsbar - v0.1.0 - 2013-08-02
+ * tsbar - v0.1.0 - 2013-08-09
  * https://github.com/tiddlyspace/tsbar
  * Copyright (c) 2013 Osmosoft; Licensed BSD New 
  */
@@ -378,14 +378,46 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<span>| --- Navigation Area --- |</span><span> --- TS Bar --- </span><span>| --- User Area --- |</span>";
+  return "<div>\n	<nav>\n		<ul>\n			<li>\n				<a href=\"#\" target=\"_blank\">Search</a>\n			</li>\n			<li>\n				<a href=\"http://help.tiddlyspace.com\" target=\"_blank\">Help</a>\n			</li>\n			<li>\n				<a href=\"_space\" target=\"_blank\">This space</a>\n			</li>\n			<li>\n				<a href=\"_account\" target=\"_blank\">Your account</a>\n			</li>\n		</ul>\n	</nav>\n	<h1><a href=\"/\" target=\"_blank\">TiddlySpace</a></h1>\n	<form>\n		<input type=\"text\" placeholder=\"Username\">\n		<input type=\"password\" placeholder=\"Password\">\n		<button>Login</button>\n	</form>\n</div>";
   });
 /**
  A stub to get the tsbar into TiddlySpace as a tiddler.
  The common recipe in TiddlySpace refers to this file.
  **/
-(function($, exports) {
+(function($) {
 
-    $('body').prepend('<div class="tsbar">Loading...</div>');
-    $('.tsbar').html(exports.tsbar['tsbar.html']());
-})($, window);
+    $('body').prepend('<header class="tsbar">Loading...</header>');
+    var $tsbar = $('.tsbar');
+    var $belowTsbar = $tsbar.next();
+
+    $tsbar.load('/bags/tsbar_public/tiddlers/tsbar.html', function () {
+
+		$('head').append('<link rel="stylesheet" href="/bags/tsbar_public/tiddlers/tsbar.css" type="text/css"/>');
+		setMarginBelowTsbar();
+    });
+
+    var $window = $(window);
+    $window.resize(function() {
+
+		setMarginBelowTsbar();
+    });
+
+    function setMarginBelowTsbar() {
+
+		var windowWidth = $window.width();
+
+		if (windowWidth < 1024) {
+			$('.tsbar h1 a').text('TS');
+		} else {
+			$('.tsbar h1 a').text('TiddlySpace');
+		}
+
+		if (windowWidth <= 420) {
+			$belowTsbar.css('margin-top', '230px');
+		} else if (windowWidth < 800) {
+			$belowTsbar.css('margin-top', '100px');
+		} else {
+			$belowTsbar.css('margin-top', '60px');
+		}
+    }
+})($);

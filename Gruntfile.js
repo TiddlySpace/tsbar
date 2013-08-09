@@ -32,12 +32,20 @@ module.exports = function (grunt) {
                 src: ['src/js/lib/handlebars/handlebars.runtime.js', 'dist/templates.js', 'src/js/*.js'],
                 dest: 'dist/<%= pkg.name %>.js'
             },
-            tid: {
-                src: ['src/tsbar.meta', '<%= concat.js.dest %>'],
+            jstid: {
+                src: ['src/tsbar.js.meta', '<%= concat.js.dest %>'],
                 dest: 'dist/<%= pkg.name %>.js.tid'
             },
+            htmltid: {
+                src: ['src/tsbar.html.meta', 'src/html/tsbar.html'],
+                dest: 'dist/<%= pkg.name %>.tid'
+            },
+            csstid: {
+                src: ['src/tsbar.css.meta', 'src/css/tsbar.css'],
+                dest: 'dist/<%= pkg.name %>.css.tid'
+            },
             mintid: {
-                src: ['src/tsbar.meta', '<%= uglify.js.dest %>'],
+                src: ['src/tsbar.js.meta', '<%= uglify.js.dest %>'],
                 dest: 'dist/<%= pkg.name %>.min.js.tid'
             }
         },
@@ -70,7 +78,9 @@ module.exports = function (grunt) {
         copy: {
             tsapp: {
                 files: [
-                    { expand: true, flatten: true, src: ['dist/*.js'], dest: 'assets/', filter: 'isFile' }
+                    { expand: true, flatten: true, src: ['dist/*.js'], dest: 'assets/', filter: 'isFile' },
+                    { expand: true, flatten: true, src: ['src/css/*.css'], dest: 'assets/', filter: 'isFile' },
+                    { expand: true, flatten: true, src: ['src/html/*.html'], dest: 'assets/', filter: 'isFile' }
                 ]
             }
         },
@@ -95,8 +105,11 @@ module.exports = function (grunt) {
                 tasks: ['jshint:gruntfile']
             },
             src: {
-                files: ['<%= jshint.src.src %>', 'src/html/*.html'],
-                tasks: ['default']
+                files: ['<%= jshint.src.src %>', 'src/html/*.html', 'src/css/*.css'],
+                tasks: ['default'],
+                options: {
+                    livereload: true,
+                }
             }
         }
     });
@@ -107,7 +120,10 @@ module.exports = function (grunt) {
      * Concatenate the JS together, then prepend the tiddler meta data.
      * Then compress and prepend the tiddler meta data to the compressed version as well.
      */
-    grunt.registerTask('build', ['handlebars', 'concat:js', 'concat:tid', 'uglify', 'concat:mintid']);
+    grunt.registerTask('build', [
+        'handlebars', 'concat:js', 'concat:jstid', 'concat:csstid',
+        'concat:htmltid', 'uglify', 'concat:mintid'
+        ]);
 
     //TODO: replace this with real tests later
     grunt.registerTask('test', ['default']);

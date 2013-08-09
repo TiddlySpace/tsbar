@@ -1,0 +1,79 @@
+.tsbar div {
+	background-color: black;
+	color: white;
+	font-family: Helvetica, Arial, sans-serif;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	min-height: 55px;
+	text-align: center;
+}
+
+.tsbar nav {
+	display: inline-block;
+}
+
+.tsbar a {
+	text-decoration: none;
+	color: white;
+}
+
+.tsbar a:hover {
+	padding: 4px;
+	background: #8C8C8C;
+}
+
+.tsbar ul {
+	list-style: none;
+	padding: 0;
+}
+
+.tsbar li {
+	display: inline;
+	font-size: 18px;
+	margin-right: 5px;
+}
+
+.tsbar h1 {
+	display: inline-block;
+	font-size: 24px;
+	margin: 10px 50px 10px 50px;
+	text-transform: uppercase;
+	vertical-align: middle;
+}
+
+.tsbar form {
+	display: inline-block;
+}
+
+.tsbar input {
+	padding: 5px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	border: none;
+	height: 20px;
+	width: 150px;
+}
+
+.tsbar button {
+	height: 30px;
+	background-color: blue;
+	color: white;
+	border: none;
+}
+
+@media screen and (max-width: 880px) {
+	.tsbar h1 {
+		margin-left: 10px;
+		margin-right: 10px;
+	}
+}
+
+@media screen and (max-width: 420px) {
+	.tsbar li, .tsbar h1 {
+		display: block;
+	}
+	.tsbar ul {
+		margin-bottom: 0;
+	}
+}

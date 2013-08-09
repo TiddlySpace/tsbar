@@ -1,3 +1,7 @@
+type: text/html
+tags: excludeLists excludeSearch
+_cache-max-age: 43200
+
 <div>
 	<nav>
 		<ul>
